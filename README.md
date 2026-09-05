@@ -30,15 +30,18 @@ Public visualization for the **Cryo Omega / AGI-3** agentic mesh — neural dend
 ## Structure
 
 ```
-index.html                 Immersive landing (Brain | Heart + Mesh + lounge)
+index.html                 SPA shell — Pulse + Playground tabs (?tab=)
 css/pulse.css              Cryo palette, comfort mode, avatar lounge
+css/playground.css         Shared nav + Agents Playground layout
 js/brain.js                Canvas neural brain / dendrites
 js/heart.js                ECG QRS heart monitor
 js/mesh.js                 Agentic mesh topology + node activity glow
 js/avatar.js               AvatarCast — multi chibi lounge (canvas)
 js/dialogue.js             Rotating discussion bubbles between agents
-js/main.js                 Live poll + lerp + comfort + reduced-motion
+js/playground.js           Interactive spektrum landscapes (pan/zoom)
+js/main.js                 Live poll + tab routing + comfort + reduced-motion
 data/mesh.json             Public node/edge metadata only
+data/landscapes.json       Playground biomes (L0 + S1–S8)
 data/history.json          Token pulse history (public aggregates)
 data/pulse-state.json      Current brain/heart intensity 0..1
 data/live.json             Hot snapshot polled by the frontend
@@ -58,6 +61,7 @@ favicon.svg                Brand mark
 - **Comfort mode** toggle: softer contrast, less glow / particle density
 - 60fps-friendly canvas, responsive, hover tooltips on mesh nodes
 - Avatar lounge integrates with panels via shared pulse accent glow
+- Top nav: **Pulse** | **Playground** — accurate labels, mobile-friendly, reduced clutter
 
 ## Local preview
 
@@ -158,6 +162,32 @@ A cozy **lounge bar** along the bottom holds a cast of **6** cryo chibi agents. 
 **UX:** bubbles appear → fade → next speaker; click an avatar to pin/focus and show a one-line status. Mobile: cast scrolls horizontally without covering counters. Comfort mode + `prefers-reduced-motion` soften glow and bubble animation.
 
 Scripts populate `avatars` + a few `dialogue` picks in `live-snapshot.mjs` (legacy `AVATAR_STATE` still sets the single `avatar` field).
+
+
+## Agents Playground
+
+Separate **Playground** tab with stylized landscape biomes per spektrum role (not jammed into the Pulse hero).
+
+| Open | URL |
+|------|-----|
+| Pulse (default) | https://pierreg99.github.io/CryAIPulse/?tab=pulse |
+| Playground | https://pierreg99.github.io/CryAIPulse/?tab=playground |
+
+Deep-link query: **`?tab=playground`** / **`?tab=pulse`** (also works locally).
+
+| ID | Role | Biome |
+|----|------|-------|
+| L0 | Cryoomega | Nexus Core |
+| S1 | Strategist | Strategy Overlook |
+| S2 | Architect | Architecture Grid Mesa |
+| S3 | Coder | Code Neon Canyon |
+| S4 | Researcher | Research Aurora Field |
+| S5 | Writer | Writer Mist Valley |
+| S6 | Critic | Critic Sharp Ridges |
+| S7 | DomainExpert | Domain Crystal Caves |
+| S8 | Ethicist | Ethicist Calm Ice Garden |
+
+**Interactions:** pan (drag) · zoom (scroll / pinch / +/-) · click biome or side list to travel/focus · hover tooltips · rotating zone dialogue. Activity from `data/live.json` tints weather / pulse intensity per zone. Comfort mode softens glow. Live poller keeps running; playground reads the same snapshot for energy/weather.
 
 ## Token pulse history
 

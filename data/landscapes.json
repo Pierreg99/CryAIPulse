@@ -1,0 +1,305 @@
+{
+  "meta": {
+    "title": "Agents Playground",
+    "tagline": "Spektrum biomes \u2014 click to travel, pan & zoom to explore",
+    "version": "1.0.0",
+    "safeMode": true,
+    "note": "Public visualization only \u2014 stylized biomes, no secrets."
+  },
+  "world": {
+    "width": 2400,
+    "height": 1600,
+    "origin": {
+      "x": 1200,
+      "y": 800
+    }
+  },
+  "weatherKinds": [
+    "clear",
+    "mist",
+    "aurora",
+    "neon",
+    "storm",
+    "crystal",
+    "ice"
+  ],
+  "zones": [
+    {
+      "id": "L0",
+      "agentId": "cryoomega",
+      "role": "Cryoomega",
+      "biome": "nexus-core",
+      "label": "Nexus Core",
+      "subtitle": "Cryoomega origin peak",
+      "desc": "Central cryo nucleus where mesh resonance roots. Soft ice rings and a calm pulse beacon.",
+      "x": 1200,
+      "y": 780,
+      "radius": 140,
+      "hue": "cyan",
+      "palette": [
+        "#00e5ff",
+        "#0a1428",
+        "#e0f7fa"
+      ],
+      "weather": "clear",
+      "dialogue": [
+        "Hold the cadence. Every biome answers to the core.",
+        "Mesh pulse steady \u2014 travel when the rings align."
+      ]
+    },
+    {
+      "id": "S1",
+      "agentId": "strategist",
+      "role": "Strategist",
+      "biome": "strategy-overlook",
+      "label": "Strategy Overlook",
+      "subtitle": "High ridges \u00b7 trade-offs",
+      "desc": "Cliff terraces and path markers. Direction and priorities sketched across the valley below.",
+      "x": 620,
+      "y": 420,
+      "radius": 110,
+      "hue": "cyan",
+      "palette": [
+        "#5ce1ff",
+        "#0d2138",
+        "#7ec8ff"
+      ],
+      "weather": "clear",
+      "dialogue": [
+        "Prioritize the ridge path. Skip the shiny canyon for now.",
+        "Trade-offs drawn on the overlook. Pick one lane."
+      ]
+    },
+    {
+      "id": "S2",
+      "agentId": "architect",
+      "role": "Architect",
+      "biome": "grid-mesa",
+      "label": "Architecture Grid Mesa",
+      "subtitle": "Structure \u00b7 interfaces",
+      "desc": "Isometric grid plateaus and wireframe towers. Systems mapped in clean glass lines.",
+      "x": 1780,
+      "y": 400,
+      "radius": 115,
+      "hue": "violet",
+      "palette": [
+        "#c4b5fd",
+        "#1a1030",
+        "#a78bfa"
+      ],
+      "weather": "clear",
+      "dialogue": [
+        "Keep the lounge decoupled from the mesa grid.",
+        "Interfaces first. Towers follow the mesh edges."
+      ]
+    },
+    {
+      "id": "S3",
+      "agentId": "coder",
+      "role": "Coder",
+      "biome": "neon-canyon",
+      "label": "Code Neon Canyon",
+      "subtitle": "Runtime craft \u00b7 diffs",
+      "desc": "Vertical neon strata and glowing brackets. Implementation flows like river light through the gorge.",
+      "x": 1980,
+      "y": 820,
+      "radius": 120,
+      "hue": "mint",
+      "palette": [
+        "#00ffa3",
+        "#041a14",
+        "#39ff14"
+      ],
+      "weather": "neon",
+      "dialogue": [
+        "Diff landed. Watch the neon edges for regressions.",
+        "Runtime is green in the canyon. Ship the next delta."
+      ]
+    },
+    {
+      "id": "S4",
+      "agentId": "researcher",
+      "role": "Researcher",
+      "biome": "aurora-field",
+      "label": "Research Aurora Field",
+      "subtitle": "Evidence \u00b7 synthesis",
+      "desc": "Soft aurora curtains over open tundra. Sources float as light ribbons waiting to be woven.",
+      "x": 1680,
+      "y": 1180,
+      "radius": 115,
+      "hue": "mint",
+      "palette": [
+        "#a0ffe0",
+        "#0a1a28",
+        "#67e8f9"
+      ],
+      "weather": "aurora",
+      "dialogue": [
+        "Sources align under the aurora. Frame the claim briefly.",
+        "History tail is healthy \u2014 synthesize, don't hoard."
+      ]
+    },
+    {
+      "id": "S5",
+      "agentId": "writer",
+      "role": "Writer",
+      "biome": "mist-valley",
+      "label": "Writer Mist Valley",
+      "subtitle": "Narrative \u00b7 voice",
+      "desc": "Low mist between soft hills. Words settle as dew \u2014 clarity without clutter.",
+      "x": 980,
+      "y": 1240,
+      "radius": 110,
+      "hue": "ice",
+      "palette": [
+        "#7ec8ff",
+        "#0c1828",
+        "#e0f7fa"
+      ],
+      "weather": "mist",
+      "dialogue": [
+        "Copy is crisp. Mist thins when the sentence earns it.",
+        "Drop fluff. One clear line per agent."
+      ]
+    },
+    {
+      "id": "S6",
+      "agentId": "critic",
+      "role": "Critic",
+      "biome": "sharp-ridges",
+      "label": "Critic Sharp Ridges",
+      "subtitle": "Stress-test \u00b7 quality",
+      "desc": "Jagged ice ridges and knife-edge paths. Gaps show clearly in harsh light.",
+      "x": 420,
+      "y": 1100,
+      "radius": 110,
+      "hue": "ice",
+      "palette": [
+        "#e0f7fa",
+        "#121820",
+        "#94a3b8"
+      ],
+      "weather": "storm",
+      "dialogue": [
+        "Tighten the null path. Then we greenlight.",
+        "Edges look sharp from here. Fix the soft spots."
+      ]
+    },
+    {
+      "id": "S7",
+      "agentId": "domain",
+      "role": "DomainExpert",
+      "biome": "crystal-caves",
+      "label": "Domain Crystal Caves",
+      "subtitle": "Specialized depth",
+      "desc": "Faceted crystal chambers underground. Depth on demand \u2014 enter only when the question needs it.",
+      "x": 380,
+      "y": 700,
+      "radius": 115,
+      "hue": "cyan",
+      "palette": [
+        "#22d3ee",
+        "#0a1628",
+        "#67e8f9"
+      ],
+      "weather": "crystal",
+      "dialogue": [
+        "Depth available. Ask a precise question.",
+        "Crystal facets catch only relevant light."
+      ]
+    },
+    {
+      "id": "S8",
+      "agentId": "ethicist",
+      "role": "Ethicist",
+      "biome": "ice-garden",
+      "label": "Ethicist Calm Ice Garden",
+      "subtitle": "Boundaries \u00b7 SafeMode",
+      "desc": "Quiet ice garden with soft lanterns. Boundaries held gently \u2014 harm stays outside the fence.",
+      "x": 780,
+      "y": 1340,
+      "radius": 105,
+      "hue": "rose",
+      "palette": [
+        "#ff4d8d",
+        "#1a0a18",
+        "#fda4af"
+      ],
+      "weather": "ice",
+      "dialogue": [
+        "SafeMode holds. Keep secrets out of the garden.",
+        "Boundaries clear. Comfort stays optional, harm does not."
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "from": "L0",
+      "to": "S1"
+    },
+    {
+      "from": "L0",
+      "to": "S2"
+    },
+    {
+      "from": "L0",
+      "to": "S3"
+    },
+    {
+      "from": "L0",
+      "to": "S4"
+    },
+    {
+      "from": "L0",
+      "to": "S5"
+    },
+    {
+      "from": "L0",
+      "to": "S6"
+    },
+    {
+      "from": "L0",
+      "to": "S7"
+    },
+    {
+      "from": "L0",
+      "to": "S8"
+    },
+    {
+      "from": "S1",
+      "to": "S2"
+    },
+    {
+      "from": "S2",
+      "to": "S3"
+    },
+    {
+      "from": "S3",
+      "to": "S4"
+    },
+    {
+      "from": "S4",
+      "to": "S5"
+    },
+    {
+      "from": "S5",
+      "to": "S6"
+    },
+    {
+      "from": "S6",
+      "to": "S7"
+    },
+    {
+      "from": "S7",
+      "to": "S1"
+    },
+    {
+      "from": "S5",
+      "to": "S8"
+    },
+    {
+      "from": "S6",
+      "to": "S8"
+    }
+  ]
+}

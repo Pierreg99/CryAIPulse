@@ -3,113 +3,189 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="CryAIPulse — public brain & heart pulse visualization for the Cryo Omega / AGI-3 agentic mesh. Visualization only." />
+  <meta name="description" content="CryAIPulse — public brain & heart pulse visualization and Agents Playground for the Cryo Omega / AGI-3 agentic mesh. Visualization only." />
   <meta name="theme-color" content="#020510" />
   <meta property="og:title" content="CryAIPulse" />
-  <meta property="og:description" content="Brain & heart pulse of the agentic mesh — Cryo Omega / AGI-3 visualization." />
+  <meta property="og:description" content="Brain & heart pulse of the agentic mesh — Cryo Omega / AGI-3 visualization + Agents Playground." />
   <meta property="og:type" content="website" />
   <title>CryAIPulse — Brain & Heart Pulse of the Agentic Mesh</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/pulse.css" />
+  <link rel="stylesheet" href="css/playground.css" />
 </head>
 <body>
   <div class="cryo-bg" aria-hidden="true"></div>
 
   <div class="wrap">
     <header class="site-header">
-      <a class="brand" href="./">
+      <a class="brand" href="./?tab=pulse">
         <img class="brand-mark" src="favicon.svg" alt="" width="40" height="40" />
         <div class="brand-text">
           <h1>CryAIPulse</h1>
           <p>Brain &amp; heart pulse of the agentic mesh</p>
         </div>
       </a>
-      <div class="header-badges">
-        <button type="button" class="comfort-toggle" id="comfort-toggle" aria-pressed="false" title="Reduce glow and particle density">Comfort</button>
-        <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
+      <div class="header-cluster">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="nav-tab is-active" id="nav-pulse" href="?tab=pulse" data-tab="pulse" aria-current="page">Pulse</a>
+          <a class="nav-tab" id="nav-playground" href="?tab=playground" data-tab="playground">Playground</a>
+        </nav>
+        <div class="header-badges">
+          <button type="button" class="comfort-toggle" id="comfort-toggle" aria-pressed="false" title="Reduce glow and particle density">Comfort</button>
+          <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
+        </div>
       </div>
     </header>
 
-    <section class="hero" aria-labelledby="hero-title">
-      <h2 id="hero-title">
-        <span class="brain">Brain</span> &amp; <span class="heart">Heart</span> Pulse
-      </h2>
-      <p class="tagline">
-        Live resonance map for AGI-3 / Cryoomega mesh roles — neural dendrites from L0,
-        ECG QRS heartbeat, synaptic gaps, and a lounge cast that discusses the mesh.
-      </p>
-      <div class="live-bar" aria-label="Live data status">
-        <span class="live-pill" id="live-status" data-state="live" title="Polling data/live.json">live</span>
-        <span class="footer-note">poll ~6s · sources <span id="live-sources">—</span></span>
-      </div>
-      <div class="counters" role="group" aria-label="Live cosmetic counters">
-        <div class="counter neural">
-          <div class="label">Neural Hz</div>
-          <div>
-            <span class="value" id="neural-hz">12.0</span><span class="unit">Hz</span>
-          </div>
-        </div>
-        <div class="counter cardiac">
-          <div class="label">Mesh BPM</div>
-          <div>
-            <span class="value" id="cardiac-bpm">72</span><span class="unit">BPM</span>
-          </div>
-        </div>
-        <div class="counter neural">
-          <div class="label">Token pulse</div>
-          <div>
-            <span class="value" id="token-total">—</span><span class="unit">tok</span>
-          </div>
-        </div>
-        <div class="counter neural">
-          <div class="label">In / Out</div>
-          <div>
-            <span class="value" id="token-in">—</span><span class="unit">/</span>
-            <span class="value" id="token-out">—</span>
-          </div>
-        </div>
-      </div>
-      <div class="spark-row">
-        <canvas id="history-spark" width="220" height="40" aria-label="Token history sparkline"></canvas>
-        <p class="footer-note">
-          Tail events: <span id="history-count">0</span>
-          · updated <span id="pulse-updated">—</span>
-          <span class="spark-legend">cyan tokens · rose BPM</span>
+    <!-- ===== PULSE VIEW ===== -->
+    <div id="view-pulse" class="view-panel" data-view="pulse">
+      <section class="hero" aria-labelledby="hero-title">
+        <h2 id="hero-title">
+          <span class="brain">Brain</span> &amp; <span class="heart">Heart</span> Pulse
+        </h2>
+        <p class="tagline">
+          Live resonance map for AGI-3 / Cryoomega mesh roles — neural dendrites from L0,
+          ECG QRS heartbeat, synaptic gaps, and a lounge cast that discusses the mesh.
         </p>
-      </div>
-      <p id="motion-note" class="footer-note" hidden style="margin-top:0.75rem">
-        Reduced motion preferred — animations softened.
-      </p>
-    </section>
-
-    <section class="dual" aria-label="Brain and heart monitors">
-      <article class="panel brain-panel">
-        <div class="panel-header">
-          <span class="panel-title cyan">Neural Brain</span>
-          <span class="panel-meta">L0 dendrite · synaptic gaps</span>
+        <div class="live-bar" aria-label="Live data status">
+          <span class="live-pill" id="live-status" data-state="live" title="Polling data/live.json">live</span>
+          <span class="footer-note">poll ~6s · sources <span id="live-sources">—</span></span>
         </div>
-        <canvas id="brain-canvas" width="600" height="340" aria-label="Animated neural brain graph"></canvas>
-      </article>
-      <article class="panel heart-panel">
-        <div class="panel-header">
-          <span class="panel-title rose">Heart Pulse</span>
-          <span class="panel-meta">ECG QRS · cryo monitor</span>
+        <div class="counters" role="group" aria-label="Live cosmetic counters">
+          <div class="counter neural">
+            <div class="label">Neural Hz</div>
+            <div>
+              <span class="value" id="neural-hz">12.0</span><span class="unit">Hz</span>
+            </div>
+          </div>
+          <div class="counter cardiac">
+            <div class="label">Mesh BPM</div>
+            <div>
+              <span class="value" id="cardiac-bpm">72</span><span class="unit">BPM</span>
+            </div>
+          </div>
+          <div class="counter neural">
+            <div class="label">Token pulse</div>
+            <div>
+              <span class="value" id="token-total">—</span><span class="unit">tok</span>
+            </div>
+          </div>
+          <div class="counter neural">
+            <div class="label">In / Out</div>
+            <div>
+              <span class="value" id="token-in">—</span><span class="unit">/</span>
+              <span class="value" id="token-out">—</span>
+            </div>
+          </div>
         </div>
-        <canvas id="heart-canvas" width="600" height="340" aria-label="Animated ECG heart pulse monitor"></canvas>
-      </article>
-    </section>
+        <div class="spark-row">
+          <canvas id="history-spark" width="220" height="40" aria-label="Token history sparkline"></canvas>
+          <p class="footer-note">
+            Tail events: <span id="history-count">0</span>
+            · updated <span id="pulse-updated">—</span>
+            <span class="spark-legend">cyan tokens · rose BPM</span>
+          </p>
+        </div>
+        <p id="motion-note" class="footer-note" hidden style="margin-top:0.75rem">
+          Reduced motion preferred — animations softened.
+        </p>
+      </section>
 
-    <section class="mesh-section" aria-labelledby="mesh-title">
-      <div class="section-head">
-        <h3 id="mesh-title">Agentic Mesh Topology</h3>
-        <p id="mesh-fallback">Hover nodes · resonance from L0 Cryoomega</p>
-      </div>
-      <div class="mesh-panel">
-        <canvas id="mesh-canvas" width="1200" height="420" aria-label="Interactive agentic mesh topology"></canvas>
-        <div id="mesh-tooltip" class="tooltip" role="tooltip"></div>
-      </div>
-      <div id="legend" class="legend" aria-label="Mesh node legend"></div>
-    </section>
+      <section class="dual" aria-label="Brain and heart monitors">
+        <article class="panel brain-panel">
+          <div class="panel-header">
+            <span class="panel-title cyan">Neural Brain</span>
+            <span class="panel-meta">L0 dendrite · synaptic gaps</span>
+          </div>
+          <canvas id="brain-canvas" width="600" height="340" aria-label="Animated neural brain graph"></canvas>
+        </article>
+        <article class="panel heart-panel">
+          <div class="panel-header">
+            <span class="panel-title rose">Heart Pulse</span>
+            <span class="panel-meta">ECG QRS · cryo monitor</span>
+          </div>
+          <canvas id="heart-canvas" width="600" height="340" aria-label="Animated ECG heart pulse monitor"></canvas>
+        </article>
+      </section>
+
+      <section class="mesh-section" aria-labelledby="mesh-title">
+        <div class="section-head">
+          <h3 id="mesh-title">Agentic Mesh Topology</h3>
+          <p id="mesh-fallback">Hover nodes · resonance from L0 Cryoomega</p>
+        </div>
+        <div class="mesh-panel">
+          <canvas id="mesh-canvas" width="1200" height="420" aria-label="Interactive agentic mesh topology"></canvas>
+          <div id="mesh-tooltip" class="tooltip" role="tooltip"></div>
+        </div>
+        <div id="legend" class="legend" aria-label="Mesh node legend"></div>
+      </section>
+    </div>
+
+    <!-- ===== PLAYGROUND VIEW ===== -->
+    <div id="view-playground" class="view-panel" data-view="playground" hidden>
+      <section class="playground" aria-labelledby="playground-title">
+        <div class="playground-hero">
+          <h2 id="playground-title">Agents Playground</h2>
+          <p>
+            Spektrum biomes for L0 Cryoomega and S1–S8 — click a landscape to travel,
+            pan &amp; zoom to explore. Live activity tints weather in each zone.
+          </p>
+        </div>
+
+        <div class="playground-toolbar">
+          <div class="tool-group">
+            <button type="button" class="pg-btn" id="pg-reset" title="Reset camera to Nexus Core">Reset · L0</button>
+            <button type="button" class="pg-btn" id="pg-zoom-out" title="Zoom out">−</button>
+            <button type="button" class="pg-btn" id="pg-zoom-in" title="Zoom in">+</button>
+          </div>
+          <span class="pg-meta" id="pg-meta">loading landscapes…</span>
+        </div>
+
+        <div class="playground-stage">
+          <div class="playground-canvas-wrap">
+            <canvas id="playground-canvas" width="1200" height="560" aria-label="Interactive agents playground landscapes"></canvas>
+            <div id="pg-tooltip" role="tooltip"></div>
+          </div>
+
+          <aside class="playground-side" aria-label="Playground focus panel">
+            <div class="pg-card">
+              <h3>Focused agent</h3>
+              <div class="pg-focus-role" id="pg-focus-role">Cryoomega</div>
+              <div class="pg-focus-biome" id="pg-focus-biome">Nexus Core</div>
+              <p class="pg-focus-desc" id="pg-focus-desc">Central cryo nucleus where mesh resonance roots.</p>
+              <div class="pg-stats">
+                <div class="pg-stat">
+                  <span class="k">Activity</span>
+                  <span class="v" id="pg-stat-act">—</span>
+                </div>
+                <div class="pg-stat">
+                  <span class="k">Weather</span>
+                  <span class="v" id="pg-stat-weather">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pg-card">
+              <h3>Landscapes</h3>
+              <ul class="pg-zone-list" id="pg-zone-list"></ul>
+            </div>
+
+            <div class="pg-card pg-dialogue">
+              <h3>Zone dialogue</h3>
+              <div class="pg-bubble">
+                <div class="pg-bubble-from" id="pg-bubble-from">Cryoomega</div>
+                <div id="pg-bubble-text">Hold the cadence. Every biome answers to the core.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <p class="pg-hint">
+          Drag to pan · scroll / pinch to zoom · click a biome or list item to focus.
+          Comfort mode softens glow. Deep-link: <code>?tab=playground</code>
+        </p>
+      </section>
+    </div>
 
     <footer class="site-footer">
       <div>
@@ -131,7 +207,8 @@
   <script src="js/mesh.js" defer></script>
   <script src="js/avatar.js" defer></script>
   <script src="js/dialogue.js" defer></script>
-  <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Interactive mesh and avatar lounge available.</div>
+  <script src="js/playground.js" defer></script>
+  <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Pulse and Agents Playground available.</div>
   <script src="js/main.js" defer></script>
 </body>
 </html>

@@ -1,7 +1,8 @@
 /**
  * CryAIPulse — orchestration
  * Polls data/live.json and drives brain / heart / mesh / AvatarCast / dialogue /
- * counters / legend / history sparkline. Comfort mode + reduced-motion aware.
+ * counters / legend / history sparkline + Agents Playground.
+ * Tab routing: ?tab=pulse | ?tab=playground. Comfort mode + reduced-motion aware.
  */
 (function () {
   'use strict';
@@ -25,7 +26,48 @@
     return a + (b - a) * t;
   }
 
-  async function loadJson(path) {
+
+  function readTabFromUrl() {
+    try {
+      const q = new URLSearchParams(window.location.search).get('tab');
+      if (q === 'playground' || q === 'pulse') return q;
+    } catch (_) { /* ignore */ }
+    return 'pulse';
+  }
+
+  function writeTabToUrl(tab) {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tab);
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch (_) { /* ignore */ }
+  }
+
+  function applyTabChrome(tab) {
+    const pulseView = $('#view-pulse');
+    const playView = $('#view-playground');
+    const navPulse = $('#nav-pulse');
+    const navPlay = $('#nav-playground');
+    const isPlay = tab === 'playground';
+
+    if (pulseView) pulseView.hidden = isPlay;
+    if (playView) playView.hidden = !isPlay;
+    document.body.classList.toggle('view-playground', isPlay);
+    document.body.classList.toggle('view-pulse', !isPlay);
+
+    if (navPulse) {
+      navPulse.classList.toggle('is-active', !isPlay);
+      if (!isPlay) navPulse.setAttribute('aria-current', 'page');
+      else navPulse.removeAttribute('aria-current');
+    }
+    if (navPlay) {
+      navPlay.classList.toggle('is-active', isPlay);
+      if (isPlay) navPlay.setAttribute('aria-current', 'page');
+      else navPlay.removeAttribute('aria-current');
+    }
+  }
+
+    async function loadJson(path) {
     const res = await fetch(path, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to load ' + path);
     return res.json();
@@ -204,6 +246,9 @@
 
     let cast = null;
     let dialogue = null;
+    let playground = null;
+    let currentTab = readTabFromUrl();
+    applyTabChrome(currentTab);
     const loungeRoot = $('#avatar-lounge');
 
     if (loungeRoot && typeof CryAIPulseAvatarCast === 'function') {
@@ -244,11 +289,36 @@
         writeComfortPref(comfortOn);
         if (cast) cast.setComfort(comfortOn);
         if (dialogue) dialogue.setComfort(comfortOn);
+        if (playground) playground.setComfort(comfortOn);
         if (lastLive) drawSparkline(spark, lastLive.historyTail || []);
       });
     }
 
-    const targets = {
+
+    // Tab navigation (?tab=pulse | ?tab=playground)
+    document.querySelectorAll('.site-nav [data-tab]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tab = el.getAttribute('data-tab');
+        if (!tab || tab === currentTab) {
+          writeTabToUrl(tab || currentTab);
+          return;
+        }
+        currentTab = tab;
+        writeTabToUrl(tab);
+        applyTabChrome(tab);
+        if (playground) playground.setVisible(tab === 'playground');
+        if (tab === 'playground' && playground && lastLive) {
+          playground.applyLive(lastLive);
+        }
+        // Lounge only on Pulse
+        if (loungeRoot) {
+          loungeRoot.style.display = tab === 'playground' ? 'none' : '';
+        }
+      });
+    });
+
+        const targets = {
       brain: 0.35,
       heart: 0.35,
       mesh: 0.35,
@@ -321,6 +391,7 @@
       drawSparkline(spark, live.historyTail || []);
       if (cast && cast.applyLive) cast.applyLive(live);
       if (dialogue && dialogue.applyLive) dialogue.applyLive(live);
+      if (playground && playground.applyLive) playground.applyLive(live);
       setStatusChrome(live.status || 'live', true);
       lastLive = live;
     }
@@ -384,12 +455,29 @@
       loadJson('data/pulse-state.json').catch(() => null),
       loadJson('data/history.json').catch(() => []),
       loadJson('data/dialogue.json').catch(() => null),
+      loadJson('data/landscapes.json').catch(() => null),
     ])
-      .then(([meshData, liveData, pulseState, history, dialogueData]) => {
+      .then(([meshData, liveData, pulseState, history, dialogueData, landscapesData]) => {
         historyCache = Array.isArray(history) ? history : [];
         renderLegend(meshData.nodes);
         mesh = new CryAIPulseMesh(meshCanvas, tip, { reduced: prefersReduced || comfortOn });
         mesh.mount(meshData);
+
+        const pgRoot = $('#view-playground');
+        if (pgRoot && landscapesData && typeof CryAIPulsePlayground === 'function') {
+          playground = new CryAIPulsePlayground(pgRoot, {
+            reduced: prefersReduced,
+            comfort: comfortOn,
+          });
+          playground.mount(landscapesData);
+          playground.setVisible(currentTab === 'playground');
+          if (loungeRoot && currentTab === 'playground') {
+            loungeRoot.style.display = 'none';
+          }
+        } else if (pgRoot && !landscapesData) {
+          const meta = $('#pg-meta');
+          if (meta) meta.textContent = 'landscapes.json unavailable';
+        }
 
         if (dialogue && dialogueData && Array.isArray(dialogueData.lines)) {
           dialogue.setSeedLines(dialogueData.lines);
@@ -416,11 +504,13 @@
         if (initial) applyTargetsFromLive(initial);
 
         window.__cryaipulse = {
-          brain, heart, mesh, cast, dialogue,
+          brain, heart, mesh, cast, dialogue, playground,
           data: meshData,
+          landscapes: landscapesData,
           live: lastLive,
           pollMs: POLL_MS,
           comfort: comfortOn,
+          tab: currentTab,
         };
 
         pollLive();
@@ -431,6 +521,18 @@
         const head = $('#mesh-fallback');
         if (head) head.textContent = 'Mesh data unavailable — check data/mesh.json';
       });
+
+    window.addEventListener('popstate', () => {
+      currentTab = readTabFromUrl();
+      applyTabChrome(currentTab);
+      if (playground) playground.setVisible(currentTab === 'playground');
+      if (loungeRoot) {
+        loungeRoot.style.display = currentTab === 'playground' ? 'none' : '';
+      }
+    });
+
+    // Normalize URL so deep links are consistent
+    writeTabToUrl(currentTab);
 
     if (prefersReduced) {
       document.documentElement.classList.add('reduced-motion');
