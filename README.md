@@ -8,6 +8,7 @@ Public visualization for the **Cryo Omega / AGI-3** agentic mesh — neural dend
 
 ## Live
 
+- **Version:** 1.1.0 (see [CHANGELOG](CHANGELOG.md))
 - **GitHub Pages:** https://pierreg99.github.io/CryAIPulse/
 - **Repository:** https://github.com/Pierreg99/CryAIPulse
 
