@@ -30,18 +30,21 @@ Public visualization for the **Cryo Omega / AGI-3** agentic mesh — neural dend
 ## Structure
 
 ```
-index.html              Immersive landing (Brain | Heart + Mesh)
-css/pulse.css           Cryo palette & layout
-js/brain.js             Canvas neural brain / dendrites
-js/heart.js             ECG QRS heart monitor
-js/mesh.js              Agentic mesh topology pulses
-js/main.js              Orchestration + pulse-state + reduced-motion
-data/mesh.json          Public node/edge metadata only
-data/history.json       Token pulse history (public aggregates)
-data/pulse-state.json   Current brain/heart intensity 0..1
-scripts/append-pulse.mjs  CLI: TOKEN_IN/TOKEN_OUT → history + state
-examples/               Bridge notes + demo append
-favicon.svg             Brand mark
+index.html                 Immersive landing (Brain | Heart + Mesh)
+css/pulse.css              Cryo palette & layout
+js/brain.js                Canvas neural brain / dendrites
+js/heart.js                ECG QRS heart monitor
+js/mesh.js                 Agentic mesh topology + node activity glow
+js/main.js                 Live poll + lerp orchestration + reduced-motion
+data/mesh.json             Public node/edge metadata only
+data/history.json          Token pulse history (public aggregates)
+data/pulse-state.json      Current brain/heart intensity 0..1
+data/live.json             Hot snapshot polled by the frontend
+scripts/append-pulse.mjs   TOKEN_IN/OUT → history + state + live.json
+scripts/publish-live.mjs   Rebuild live.json from history (+ env hints)
+scripts/live-snapshot.mjs  Shared live.json builder
+examples/                  Bridge notes + demo append
+favicon.svg                Brand mark
 ```
 
 ## Design
@@ -59,6 +62,58 @@ npx --yes serve -l 4173 .
 # or: python3 -m http.server 4173
 ```
 
+
+
+## Live data (frontend sync)
+
+The Pages site continuously polls **`data/live.json`** and drives every immersive surface from that snapshot — not a one-shot demo load.
+
+| Concern | Behavior |
+|---------|----------|
+| Poll | `data/live.json?t=<timestamp>` every **~6s** (≈5–8s). **~12s** when `prefers-reduced-motion` |
+| Pause | Polling pauses while `document.hidden` |
+| Surfaces | Brain / heart intensity + Hz/BPM, mesh glow, legend highlights, token counters, history sparkline |
+| Smoothing | Intensities **lerp** toward live targets each frame |
+| Fallback | If `live.json` fails → load `pulse-state.json` once, then keep retrying `live.json` |
+| Reduced motion | Caps intensity (≤0.25), softer animations, lower poll rate |
+
+### Schema — `data/live.json`
+
+```json
+{
+  "updatedAt": "ISO-8601",
+  "tokens": { "in": 0, "out": 0, "total": 0, "sessionTotal": 0 },
+  "pulse": { "brain": 0, "heart": 0, "neuralHz": 6, "meshBpm": 55 },
+  "nodes": {
+    "L0": { "activity": 0.0 },
+    "S1": { "activity": 0.0 },
+    "Build": { "activity": 0.0 },
+    "Sense": { "activity": 0.0 }
+  },
+  "historyTail": [
+    { "ts": "ISO", "totalTokens": 0, "neuralHz": 6, "meshBpm": 55 }
+  ],
+  "sources": ["cryo-llm", "coding", "manual"],
+  "status": "live"
+}
+```
+
+- `nodes.*.activity` is **0..1** (also keys `S2`…`S8`). `Build` / `Sense` map to mesh ids `R-BUILD` / `R-SENSE`.
+- `historyTail` keeps the last ~30 history points for the sparkline (cyan = tokens, rose = BPM).
+- `history.json` and `pulse-state.json` remain the durable log / compact state; **`live.json` is the hot snapshot**.
+
+### How routines feed it
+
+```bash
+# Append an event → writes history + pulse-state + live.json
+TOKEN_IN=1200 TOKEN_OUT=800 SOURCE=cryo-llm node scripts/append-pulse.mjs
+
+# Or rebuild live.json only (from history + optional overrides)
+node scripts/publish-live.mjs
+TOKEN_IN=28000 TOKEN_OUT=21500 NODE_ACTIVITY='{"L0":0.9,"S3":0.85,"Build":0.7}' node scripts/publish-live.mjs
+```
+
+Commit & push `data/live.json` (and history/state if appended) so GitHub Pages serves the new snapshot.
 
 ## Token pulse history
 
@@ -105,7 +160,7 @@ More tokens → higher `u` → stronger ECG amplitude, denser neural sparks, fas
 TOKEN_IN=1200 TOKEN_OUT=800 SOURCE=cli node scripts/append-pulse.mjs
 ```
 
-Seeds under `data/` keep GitHub Pages looking alive immediately.
+Seeds under `data/` (including `live.json`) keep GitHub Pages looking alive immediately.
 
 ## Sync with agent-memory
 

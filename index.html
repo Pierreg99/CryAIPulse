@@ -24,7 +24,9 @@
           <p>Brain &amp; heart pulse of the agentic mesh</p>
         </div>
       </a>
-      <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
+      <div class="header-badges">
+        <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
+      </div>
     </header>
 
     <section class="hero" aria-labelledby="hero-title">
@@ -35,6 +37,10 @@
         Live resonance map for AGI-3 / Cryoomega mesh roles — neural dendrites from L0,
         ECG QRS heartbeat, synaptic gaps, and room rings Build + Sense.
       </p>
+      <div class="live-bar" aria-label="Live data status">
+        <span class="live-pill" id="live-status" data-state="live" title="Polling data/live.json">live</span>
+        <span class="footer-note">poll ~6s · sources <span id="live-sources">—</span></span>
+      </div>
       <div class="counters" role="group" aria-label="Live cosmetic counters">
         <div class="counter neural">
           <div class="label">Neural Hz</div>
@@ -54,11 +60,22 @@
             <span class="value" id="token-total">—</span><span class="unit">tok</span>
           </div>
         </div>
+        <div class="counter neural">
+          <div class="label">In / Out</div>
+          <div>
+            <span class="value" id="token-in">—</span><span class="unit">/</span>
+            <span class="value" id="token-out">—</span>
+          </div>
+        </div>
       </div>
-      <p class="footer-note" style="margin-top:0.5rem">
-        History events: <span id="history-count">0</span>
-        · updated <span id="pulse-updated">—</span>
-      </p>
+      <div class="spark-row">
+        <canvas id="history-spark" width="220" height="40" aria-label="Token history sparkline"></canvas>
+        <p class="footer-note">
+          Tail events: <span id="history-count">0</span>
+          · updated <span id="pulse-updated">—</span>
+          <span class="spark-legend">cyan tokens · rose BPM</span>
+        </p>
+      </div>
       <p id="motion-note" class="footer-note" hidden style="margin-top:0.75rem">
         Reduced motion preferred — animations softened.
       </p>

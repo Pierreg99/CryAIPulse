@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Append a token-usage pulse event to data/history.json and refresh pulse-state.json.
+ * Append a token-usage pulse event to data/history.json,
+ * refresh pulse-state.json, and rebuild data/live.json.
  *
  * Env:
  *   TOKEN_IN   – input tokens (required, integer >= 0)
  *   TOKEN_OUT  – output tokens (required, integer >= 0)
  *   SOURCE     – optional label (default: "cli")
  *   PULSE_ROOT – optional repo root (default: parent of scripts/)
+ *   NODE_ACTIVITY / NODE_* – optional live node activity hints (see publish-live.mjs)
  *
  * Formula (rises with totalTokens = TOKEN_IN + TOKEN_OUT):
  *   REF_TOKENS = 100000
@@ -21,8 +23,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  REF_TOKENS,
+  derive,
+  writeLiveJson,
+  parseNodeHints,
+} from './live-snapshot.mjs';
 
-const REF_TOKENS = 100000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = process.env.PULSE_ROOT
   ? path.resolve(process.env.PULSE_ROOT)
@@ -40,22 +47,6 @@ function parseNonNegInt(name) {
     process.exit(1);
   }
   return n;
-}
-
-function intensityFromTokens(totalTokens) {
-  const t = Math.max(0, totalTokens);
-  return Math.min(1, Math.sqrt(t / REF_TOKENS));
-}
-
-function derive(totalTokens) {
-  const u = intensityFromTokens(totalTokens);
-  return {
-    u,
-    neuralHz: Math.round((6 + u * 14) * 10) / 10,
-    meshBpm: Math.round(55 + u * 50),
-    brain: Math.round(u * 1000) / 1000,
-    heart: Math.round(u * 1000) / 1000,
-  };
 }
 
 const tokensIn = parseNonNegInt('TOKEN_IN');
@@ -89,7 +80,6 @@ const event = {
 };
 
 history.push(event);
-// Keep a bounded public trail (newest retained)
 const MAX = 200;
 if (history.length > MAX) history = history.slice(-MAX);
 
@@ -113,4 +103,23 @@ fs.mkdirSync(path.dirname(historyPath), { recursive: true });
 fs.writeFileSync(historyPath, JSON.stringify(history, null, 2) + '\n');
 fs.writeFileSync(statePath, JSON.stringify(state, null, 2) + '\n');
 
-console.log(JSON.stringify({ ok: true, event, brain: der.brain, heart: der.heart }, null, 2));
+const live = writeLiveJson(root, {
+  tokensIn,
+  tokensOut,
+  updatedAt: ts,
+  brain: der.brain,
+  heart: der.heart,
+  neuralHz: der.neuralHz,
+  meshBpm: der.meshBpm,
+  nodeHints: parseNodeHints(process.env),
+  sources: [source],
+  status: 'live',
+});
+
+console.log(JSON.stringify({
+  ok: true,
+  event,
+  brain: der.brain,
+  heart: der.heart,
+  live: { updatedAt: live.updatedAt, tokens: live.tokens, status: live.status },
+}, null, 2));

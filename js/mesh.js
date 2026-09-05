@@ -73,7 +73,9 @@
         hue: n.hue || 'cyan',
         x: 0, y: 0,
         r: n.ring === 'core' ? 18 : n.ring === 'rooms' ? 14 : 11,
-        phase: Math.random() * Math.PI * 2
+        phase: Math.random() * Math.PI * 2,
+        activity: 0.35,
+        activityTarget: 0.35
       };
       byId[n.id] = node;
       return node;
@@ -140,9 +142,10 @@
   MeshPulse.prototype.showTip = function (n, x, y) {
     if (!this.tooltip) return;
     this.tooltip.classList.toggle('rose-tip', n.hue === 'rose' || n.ring === 'rooms' && n.role === 'Sense');
+    const actPct = n.activity != null ? Math.round(n.activity * 100) + '%' : '—';
     this.tooltip.innerHTML =
       '<div class="t-id">' + n.id + ' · ' + n.ring + '</div>' +
-      '<div class="t-role">' + n.role + '</div>' +
+      '<div class="t-role">' + n.role + ' · act ' + actPct + '</div>' +
       '<div class="t-desc">' + n.desc + '</div>';
     const tw = 200;
     let left = x + 14;
@@ -161,6 +164,38 @@
   /** Token-driven immersion — faster / denser mesh ripples as tokens rise. */
   MeshPulse.prototype.setIntensity = function (u) {
     this.intensity = Math.max(0, Math.min(1, Number(u) || 0));
+  };
+
+  /**
+   * Live per-node activity map.
+   * Accepts live.json keys (L0,S1..S8,Build,Sense) and mesh ids (R-BUILD,R-SENSE).
+   */
+  MeshPulse.prototype.setNodeActivity = function (map) {
+    if (!map || typeof map !== 'object') return;
+    const alias = {
+      Build: 'R-BUILD',
+      Sense: 'R-SENSE',
+      'R-BUILD': 'R-BUILD',
+      'R-SENSE': 'R-SENSE'
+    };
+    for (const n of this.nodes) {
+      let entry = map[n.id];
+      if (!entry && n.role === 'Build') entry = map.Build;
+      if (!entry && n.role === 'Sense') entry = map.Sense;
+      if (!entry && alias[n.id]) entry = map[alias[n.id]];
+      if (!entry) continue;
+      const a = typeof entry === 'number' ? entry : entry.activity;
+      if (a == null || !Number.isFinite(Number(a))) continue;
+      n.activityTarget = Math.max(0, Math.min(1, Number(a)));
+    }
+  };
+
+  MeshPulse.prototype.lerpActivities = function (alpha) {
+    const a = Math.max(0, Math.min(1, alpha == null ? 0.12 : alpha));
+    for (const n of this.nodes) {
+      const t = n.activityTarget != null ? n.activityTarget : n.activity;
+      n.activity += (t - n.activity) * a;
+    }
   };
 
   MeshPulse.prototype.spawnPulse = function () {
@@ -195,6 +230,7 @@
     const dt = Math.min(32, now - (this._last || now));
     this._last = now;
     this.t += dt / 1000;
+    this.lerpActivities(this.reduced ? 0.2 : 0.1);
     if (!this.reduced) {
       const pulseChance = 0.08 + this.intensity * 0.18;
       const rippleChance = 0.01 + this.intensity * 0.045;
@@ -276,15 +312,21 @@
 
     // Nodes
     this.nodes.forEach((n) => {
-      const breath = this.reduced ? 1 : 1 + Math.sin(this.t * 2.2 + n.phase) * 0.06;
-      const r = n.r * breath;
+      const act = n.activity != null ? n.activity : this.intensity;
+      const breath = this.reduced ? 1 : 1 + Math.sin(this.t * (2.2 + act * 1.5) + n.phase) * (0.04 + act * 0.08);
+      const r = n.r * breath * (0.92 + act * 0.18);
       const col = this.color(n.hue);
       const isHover = this.hover && this.hover.id === n.id;
 
-      if (n.ring === 'core') {
+      if (n.ring === 'core' || act > 0.15) {
         ctx.beginPath();
-        ctx.arc(n.x, n.y, r * 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.1)';
+        ctx.arc(n.x, n.y, r * (1.5 + act * 0.9), 0, Math.PI * 2);
+        const glowA = (n.ring === 'core' ? 0.1 : 0.04) + act * 0.18;
+        ctx.fillStyle = n.hue === 'rose'
+          ? `rgba(255, 77, 141, ${glowA})`
+          : n.hue === 'mint'
+            ? `rgba(0, 255, 163, ${glowA})`
+            : `rgba(0, 229, 255, ${glowA})`;
         ctx.fill();
       }
 
@@ -298,10 +340,10 @@
         ctx.fillStyle = g;
       } else {
         ctx.fillStyle = col;
-        ctx.globalAlpha = isHover ? 1 : 0.85;
+        ctx.globalAlpha = isHover ? 1 : 0.55 + act * 0.45;
       }
       ctx.shadowColor = col;
-      ctx.shadowBlur = isHover ? 18 : n.ring === 'core' ? 16 : 8;
+      ctx.shadowBlur = isHover ? 18 : (n.ring === 'core' ? 16 : 6) + act * 14;
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;

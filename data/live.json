@@ -1,0 +1,89 @@
+{
+  "updatedAt": "2026-09-05T22:00:19.684Z",
+  "tokens": {
+    "in": 28000,
+    "out": 21500,
+    "total": 49500,
+    "sessionTotal": 104250
+  },
+  "pulse": {
+    "brain": 0.704,
+    "heart": 0.704,
+    "neuralHz": 15.8,
+    "meshBpm": 90
+  },
+  "nodes": {
+    "L0": {
+      "activity": 0.627
+    },
+    "S1": {
+      "activity": 0.667
+    },
+    "S2": {
+      "activity": 0.638
+    },
+    "S3": {
+      "activity": 0.689
+    },
+    "S4": {
+      "activity": 0.595
+    },
+    "S5": {
+      "activity": 0.566
+    },
+    "S6": {
+      "activity": 0.58
+    },
+    "S7": {
+      "activity": 0.616
+    },
+    "S8": {
+      "activity": 0.544
+    },
+    "Build": {
+      "activity": 0.564
+    },
+    "Sense": {
+      "activity": 0.611
+    }
+  },
+  "historyTail": [
+    {
+      "ts": "2026-09-05T13:50:38.372Z",
+      "totalTokens": 1250,
+      "neuralHz": 7.6,
+      "meshBpm": 61
+    },
+    {
+      "ts": "2026-09-05T16:50:38.372Z",
+      "totalTokens": 5300,
+      "neuralHz": 9.2,
+      "meshBpm": 67
+    },
+    {
+      "ts": "2026-09-05T18:50:38.372Z",
+      "totalTokens": 15500,
+      "neuralHz": 11.5,
+      "meshBpm": 75
+    },
+    {
+      "ts": "2026-09-05T20:20:38.372Z",
+      "totalTokens": 32700,
+      "neuralHz": 14,
+      "meshBpm": 84
+    },
+    {
+      "ts": "2026-09-05T21:26:38.372Z",
+      "totalTokens": 49500,
+      "neuralHz": 15.8,
+      "meshBpm": 90
+    }
+  ],
+  "sources": [
+    "demo",
+    "cryo-llm",
+    "coding",
+    "manual"
+  ],
+  "status": "live"
+}
