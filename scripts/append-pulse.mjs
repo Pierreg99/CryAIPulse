@@ -114,6 +114,10 @@ const live = writeLiveJson(root, {
   nodeHints: parseNodeHints(process.env),
   sources: [source],
   status: 'live',
+  avatarState: process.env.AVATAR_STATE || undefined,
+  avatarEnergy: process.env.AVATAR_ENERGY != null && process.env.AVATAR_ENERGY !== ''
+    ? Number(process.env.AVATAR_ENERGY) : undefined,
+  avatarLabel: process.env.AVATAR_LABEL || undefined,
 });
 
 console.log(JSON.stringify({
@@ -121,5 +125,5 @@ console.log(JSON.stringify({
   event,
   brain: der.brain,
   heart: der.heart,
-  live: { updatedAt: live.updatedAt, tokens: live.tokens, status: live.status },
+  live: { updatedAt: live.updatedAt, tokens: live.tokens, status: live.status, avatar: live.avatar },
 }, null, 2));

@@ -1,7 +1,7 @@
 /**
  * CryAIPulse — orchestration
- * Polls data/live.json and drives brain / heart / mesh / counters / legend /
- * history sparkline from live snapshot. Smooth lerp; reduced-motion aware.
+ * Polls data/live.json and drives brain / heart / mesh / avatar / counters /
+ * legend / history sparkline from live snapshot. Smooth lerp; reduced-motion aware.
  */
 (function () {
   'use strict';
@@ -185,6 +185,17 @@
     brain.mount();
     heart.mount();
 
+    const avatarCanvas = $('#avatar-canvas');
+    const avatarLabel = $('#avatar-label');
+    let avatar = null;
+    if (avatarCanvas && typeof CryAIPulseAvatar === 'function') {
+      avatar = new CryAIPulseAvatar(avatarCanvas, {
+        reduced: prefersReduced,
+        labelEl: avatarLabel,
+      });
+      avatar.mount();
+    }
+
     const targets = {
       brain: 0.35,
       heart: 0.35,
@@ -252,6 +263,7 @@
       }
 
       drawSparkline(spark, live.historyTail || []);
+      if (avatar && avatar.applyLive) avatar.applyLive(live);
       setStatusChrome(live.status || 'live', true);
       lastLive = live;
     }
@@ -341,7 +353,7 @@
         if (initial) applyTargetsFromLive(initial);
 
         window.__cryaipulse = {
-          brain, heart, mesh,
+          brain, heart, mesh, avatar,
           data: meshData,
           live: lastLive,
           pollMs: POLL_MS,

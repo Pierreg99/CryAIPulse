@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T22:00:19.684Z",
+  "updatedAt": "2026-09-05T22:02:18.661Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -80,10 +80,12 @@
     }
   ],
   "sources": [
-    "demo",
-    "cryo-llm",
-    "coding",
-    "manual"
+    "demo"
   ],
-  "status": "live"
+  "status": "live",
+  "avatar": {
+    "state": "code",
+    "energy": 0.704,
+    "label": "Coding"
+  }
 }

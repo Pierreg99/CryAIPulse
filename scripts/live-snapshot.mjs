@@ -115,6 +115,79 @@ function readHistory(root) {
  * @param {string} [opts.status]
  * @param {string} [opts.updatedAt]
  */
+const AVATAR_LABELS = {
+  sleep: 'Sleeping',
+  wake: 'Waking',
+  read: 'Reading',
+  code: 'Coding',
+  draw: 'Drawing',
+  check: 'Checking',
+};
+
+/**
+ * Derive compact avatar activity state for the live dock character.
+ * Prefer opts.avatar / AVATAR_STATE env; else pulse + nodes + sources.
+ */
+function deriveAvatar(pulse, nodes, sources, opts = {}) {
+  if (opts.avatar && opts.avatar.state) {
+    const st = String(opts.avatar.state);
+    if (AVATAR_LABELS[st]) {
+      return {
+        state: st,
+        energy: round3(opts.avatar.energy != null ? opts.avatar.energy : (pulse.brain + pulse.heart) / 2),
+        label: opts.avatar.label || AVATAR_LABELS[st],
+      };
+    }
+  }
+  if (opts.avatarState && AVATAR_LABELS[opts.avatarState]) {
+    const st = opts.avatarState;
+    return {
+      state: st,
+      energy: round3(opts.avatarEnergy != null ? opts.avatarEnergy : (pulse.brain + pulse.heart) / 2),
+      label: opts.avatarLabel || AVATAR_LABELS[st],
+    };
+  }
+
+  const brain = clamp01(pulse.brain);
+  const heart = clamp01(pulse.heart);
+  const energy = (brain + heart) / 2;
+  const act = (k) => {
+    const e = nodes[k];
+    if (!e) return 0;
+    return clamp01(typeof e === 'number' ? e : e.activity);
+  };
+  const src = (sources || []).map((s) => String(s).toLowerCase());
+  const has = (frag) => src.some((s) => s.includes(frag));
+
+  const s3 = act('S3');
+  const s4 = act('S4');
+  const s2 = act('S2');
+  const s5 = act('S5');
+  const s6 = act('S6');
+  const build = act('Build');
+
+  let state = 'sleep';
+  if (energy < 0.18) state = 'sleep';
+  else if (energy < 0.28) state = 'wake';
+  else if (has('cod') || s3 >= 0.62 || (s3 >= energy * 0.9 && s3 >= 0.5)) {
+    state = energy >= 0.45 ? 'code' : 'wake';
+  } else if (has('research') || has('read') || (s4 >= 0.58 && s4 >= s3 - 0.05)) {
+    state = 'read';
+  } else if (has('design') || has('draw') || has('creat') || (s2 >= 0.58 && s2 > s4) || (s5 >= 0.6 && s5 > s3)) {
+    state = 'draw';
+  } else if (has('review') || has('check') || has('critic') || (s6 >= 0.58 && s6 >= s3 - 0.02)) {
+    state = 'check';
+  } else if (build >= 0.65 || energy >= 0.55) state = 'code';
+  else if (energy >= 0.35) state = 'read';
+  else state = 'wake';
+
+  return {
+    state,
+    energy: round3(energy),
+    label: AVATAR_LABELS[state],
+  };
+}
+
 export function buildLiveSnapshot(root, opts = {}) {
   const history = readHistory(root);
   const last = history.length ? history[history.length - 1] : null;
@@ -154,6 +227,14 @@ export function buildLiveSnapshot(root, opts = {}) {
   let sources = [...sourceSet];
   if (!sources.length) sources = ['manual'];
 
+  const pulseObj = {
+    brain: Math.round(brain * 1000) / 1000,
+    heart: Math.round(heart * 1000) / 1000,
+    neuralHz,
+    meshBpm,
+  };
+  const avatar = deriveAvatar(pulseObj, nodes, sources, opts);
+
   return {
     updatedAt: opts.updatedAt || new Date().toISOString(),
     tokens: {
@@ -162,16 +243,12 @@ export function buildLiveSnapshot(root, opts = {}) {
       total,
       sessionTotal,
     },
-    pulse: {
-      brain: Math.round(brain * 1000) / 1000,
-      heart: Math.round(heart * 1000) / 1000,
-      neuralHz,
-      meshBpm,
-    },
+    pulse: pulseObj,
     nodes,
     historyTail,
     sources,
     status: opts.status || 'live',
+    avatar,
   };
 }
 
@@ -183,4 +260,4 @@ export function writeLiveJson(root, opts = {}) {
   return live;
 }
 
-export { REF_TOKENS, NODE_KEYS, parseNodeHints, intensityFromTokens, derive };
+export { REF_TOKENS, NODE_KEYS, parseNodeHints, intensityFromTokens, derive, deriveAvatar, AVATAR_LABELS };

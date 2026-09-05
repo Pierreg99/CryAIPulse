@@ -121,9 +121,17 @@
     </footer>
   </div>
 
+  <aside id="avatar-dock" class="avatar-dock" aria-label="Live activity avatar">
+    <div class="avatar-frame">
+      <canvas id="avatar-canvas" width="112" height="112" aria-label="Activity avatar"></canvas>
+    </div>
+    <span id="avatar-label" class="avatar-label">Sleeping</span>
+  </aside>
+
   <script src="js/brain.js" defer></script>
   <script src="js/heart.js" defer></script>
   <script src="js/mesh.js" defer></script>
+  <script src="js/avatar.js" defer></script>
   <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Interactive mesh available.</div>
   <script src="js/main.js" defer></script>
 </body>

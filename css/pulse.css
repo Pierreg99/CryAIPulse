@@ -585,3 +585,74 @@ html.reduced-motion .live-pill::before,
 html.reduced-motion .cryo-bg::after {
   animation: none !important;
 }
+
+/* Live activity avatar dock — bottom-right, non-blocking */
+.avatar-dock {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  pointer-events: none;
+  width: 128px;
+}
+
+.avatar-dock .avatar-frame {
+  width: 112px;
+  height: 112px;
+  border-radius: 20px;
+  background: rgba(10, 20, 40, 0.78);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  box-shadow:
+    0 0 24px rgba(0, 229, 255, 0.18),
+    inset 0 0 18px rgba(0, 229, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.avatar-dock canvas {
+  display: block;
+  width: 112px;
+  height: 112px;
+  pointer-events: auto;
+}
+
+.avatar-dock .avatar-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+  background: rgba(2, 5, 16, 0.72);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+  pointer-events: none;
+  max-width: 128px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 640px) {
+  .avatar-dock {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    width: 104px;
+  }
+  .avatar-dock .avatar-frame,
+  .avatar-dock canvas {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+html.reduced-motion .avatar-dock .avatar-frame {
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.12);
+}

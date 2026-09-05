@@ -9,6 +9,9 @@
  *   NODE_L0, NODE_S3, …   – individual activity overrides
  *   SOURCES               – comma-separated source labels to merge
  *   STATUS                – default "live"
+ *   AVATAR_STATE          – sleep|wake|read|code|draw|check (optional override)
+ *   AVATAR_ENERGY         – 0..1 optional
+ *   AVATAR_LABEL          – optional display label
  *   PULSE_ROOT            – repo root (default: parent of scripts/)
  *
  * Usage:
@@ -43,6 +46,11 @@ const sources = process.env.SOURCES
   ? process.env.SOURCES.split(',').map((s) => s.trim()).filter(Boolean)
   : undefined;
 const status = process.env.STATUS || 'live';
+const avatarState = process.env.AVATAR_STATE || undefined;
+const avatarEnergy = process.env.AVATAR_ENERGY != null && process.env.AVATAR_ENERGY !== ''
+  ? Number(process.env.AVATAR_ENERGY)
+  : undefined;
+const avatarLabel = process.env.AVATAR_LABEL || undefined;
 
 const live = writeLiveJson(root, {
   tokensIn,
@@ -50,6 +58,9 @@ const live = writeLiveJson(root, {
   nodeHints,
   sources,
   status,
+  avatarState,
+  avatarEnergy,
+  avatarLabel,
 });
 
 console.log(JSON.stringify({
@@ -60,4 +71,5 @@ console.log(JSON.stringify({
   pulse: live.pulse,
   status: live.status,
   historyTail: live.historyTail.length,
+  avatar: live.avatar,
 }, null, 2));

@@ -35,6 +35,7 @@ css/pulse.css              Cryo palette & layout
 js/brain.js                Canvas neural brain / dendrites
 js/heart.js                ECG QRS heart monitor
 js/mesh.js                 Agentic mesh topology + node activity glow
+js/avatar.js               Live activity chibi avatar (canvas)
 js/main.js                 Live poll + lerp orchestration + reduced-motion
 data/mesh.json             Public node/edge metadata only
 data/history.json          Token pulse history (public aggregates)
@@ -72,7 +73,7 @@ The Pages site continuously polls **`data/live.json`** and drives every immersiv
 |---------|----------|
 | Poll | `data/live.json?t=<timestamp>` every **~6s** (≈5–8s). **~12s** when `prefers-reduced-motion` |
 | Pause | Polling pauses while `document.hidden` |
-| Surfaces | Brain / heart intensity + Hz/BPM, mesh glow, legend highlights, token counters, history sparkline |
+| Surfaces | Brain / heart intensity + Hz/BPM, mesh glow, legend highlights, token counters, history sparkline, **live avatar** |
 | Smoothing | Intensities **lerp** toward live targets each frame |
 | Fallback | If `live.json` fails → load `pulse-state.json` once, then keep retrying `live.json` |
 | Reduced motion | Caps intensity (≤0.25), softer animations, lower poll rate |
@@ -94,10 +95,12 @@ The Pages site continuously polls **`data/live.json`** and drives every immersiv
     { "ts": "ISO", "totalTokens": 0, "neuralHz": 6, "meshBpm": 55 }
   ],
   "sources": ["cryo-llm", "coding", "manual"],
-  "status": "live"
+  "status": "live",
+  "avatar": { "state": "code", "energy": 0.7, "label": "Coding" }
 }
 ```
 
+- `avatar.state`: `sleep` | `wake` | `read` | `code` | `draw` | `check` (derived if omitted).
 - `nodes.*.activity` is **0..1** (also keys `S2`…`S8`). `Build` / `Sense` map to mesh ids `R-BUILD` / `R-SENSE`.
 - `historyTail` keeps the last ~30 history points for the sparkline (cyan = tokens, rose = BPM).
 - `history.json` and `pulse-state.json` remain the durable log / compact state; **`live.json` is the hot snapshot**.
@@ -114,6 +117,22 @@ TOKEN_IN=28000 TOKEN_OUT=21500 NODE_ACTIVITY='{"L0":0.9,"S3":0.85,"Build":0.7}' 
 ```
 
 Commit & push `data/live.json` (and history/state if appended) so GitHub Pages serves the new snapshot.
+
+
+## Live activity avatar
+
+A compact cryo-styled chibi agent sits in the **bottom-right** corner and animates from `data/live.json` → `avatar`.
+
+| State | When (typical) | Prop |
+|-------|----------------|------|
+| `sleep` | Low pulse / little recent activity | Pillow + Zzz |
+| `wake` | Activity just ramping up | Stretch |
+| `read` | Moderate / research (S4 bias) | Book |
+| `code` | High coding tokens / S3 / `coding` source | Laptop |
+| `draw` | Creative / design-ish | Tablet + pen |
+| `check` | Review / critic (S6) | Clipboard + magnifier |
+
+Scripts set `avatar` automatically in `live-snapshot.mjs` (override with `AVATAR_STATE` / `AVATAR_ENERGY` / `AVATAR_LABEL`). The frontend also derives state if the field is missing. Respects `prefers-reduced-motion` (static pose + label).
 
 ## Token pulse history
 
