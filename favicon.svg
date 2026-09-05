@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CryAIPulse">
+  <rect width="64" height="64" rx="14" fill="#020510"/>
+  <circle cx="24" cy="30" r="12" fill="none" stroke="#00e5ff" stroke-width="2.2" opacity="0.9"/>
+  <circle cx="24" cy="30" r="4" fill="#00e5ff"/>
+  <path d="M18 30 Q21 22 24 30 Q27 38 30 30" fill="none" stroke="#00ffa3" stroke-width="1.4" opacity="0.7"/>
+  <path d="M38 34 L42 34 L44 22 L46 42 L48 28 L50 34 L56 34" fill="none" stroke="#ff4d8d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="48" cy="18" r="2.2" fill="#ff4d8d" opacity="0.85"/>
+</svg>

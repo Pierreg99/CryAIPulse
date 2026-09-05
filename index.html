@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="CryAIPulse — public brain & heart pulse visualization for the Cryo Omega / AGI-3 agentic mesh. Visualization only." />
+  <meta name="theme-color" content="#020510" />
+  <meta property="og:title" content="CryAIPulse" />
+  <meta property="og:description" content="Brain & heart pulse of the agentic mesh — Cryo Omega / AGI-3 visualization." />
+  <meta property="og:type" content="website" />
+  <title>CryAIPulse — Brain & Heart Pulse of the Agentic Mesh</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/pulse.css" />
+</head>
+<body>
+  <div class="cryo-bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="site-header">
+      <a class="brand" href="./">
+        <img class="brand-mark" src="favicon.svg" alt="" width="40" height="40" />
+        <div class="brand-text">
+          <h1>CryAIPulse</h1>
+          <p>Brain &amp; heart pulse of the agentic mesh</p>
+        </div>
+      </a>
+      <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <h2 id="hero-title">
+        <span class="brain">Brain</span> &amp; <span class="heart">Heart</span> Pulse
+      </h2>
+      <p class="tagline">
+        Live resonance map for AGI-3 / Cryoomega mesh roles — neural dendrites from L0,
+        ECG QRS heartbeat, synaptic gaps, and room rings Build + Sense.
+      </p>
+      <div class="counters" role="group" aria-label="Live cosmetic counters">
+        <div class="counter neural">
+          <div class="label">Neural Hz</div>
+          <div>
+            <span class="value" id="neural-hz">12.0</span><span class="unit">Hz</span>
+          </div>
+        </div>
+        <div class="counter cardiac">
+          <div class="label">Mesh BPM</div>
+          <div>
+            <span class="value" id="cardiac-bpm">72</span><span class="unit">BPM</span>
+          </div>
+        </div>
+      </div>
+      <p id="motion-note" class="footer-note" hidden style="margin-top:0.75rem">
+        Reduced motion preferred — animations softened.
+      </p>
+    </section>
+
+    <section class="dual" aria-label="Brain and heart monitors">
+      <article class="panel brain-panel">
+        <div class="panel-header">
+          <span class="panel-title cyan">Neural Brain</span>
+          <span class="panel-meta">L0 dendrite · synaptic gaps</span>
+        </div>
+        <canvas id="brain-canvas" width="600" height="340" aria-label="Animated neural brain graph"></canvas>
+      </article>
+      <article class="panel heart-panel">
+        <div class="panel-header">
+          <span class="panel-title rose">Heart Pulse</span>
+          <span class="panel-meta">ECG QRS · cryo monitor</span>
+        </div>
+        <canvas id="heart-canvas" width="600" height="340" aria-label="Animated ECG heart pulse monitor"></canvas>
+      </article>
+    </section>
+
+    <section class="mesh-section" aria-labelledby="mesh-title">
+      <div class="section-head">
+        <h3 id="mesh-title">Agentic Mesh Topology</h3>
+        <p id="mesh-fallback">Hover nodes · resonance from L0 Cryoomega</p>
+      </div>
+      <div class="mesh-panel">
+        <canvas id="mesh-canvas" width="1200" height="420" aria-label="Interactive agentic mesh topology"></canvas>
+        <div id="mesh-tooltip" class="tooltip" role="tooltip"></div>
+      </div>
+      <div id="legend" class="legend" aria-label="Mesh node legend"></div>
+    </section>
+
+    <footer class="site-footer">
+      <div>
+        <strong>CryAIPulse</strong> — public visualization for Cryo Omega / AGI-3 agentics.
+        <span class="footer-note"> MIT · no private secrets · cosmetic counters only</span>
+      </div>
+      <div>
+        <a href="https://github.com/Pierreg99/CryAIPulse" rel="noopener">GitHub</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/brain.js" defer></script>
+  <script src="js/heart.js" defer></script>
+  <script src="js/mesh.js" defer></script>
+  <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Interactive mesh available.</div>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

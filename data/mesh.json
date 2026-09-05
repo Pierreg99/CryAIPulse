@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "title": "CryAIPulse",
+    "tagline": "Brain & heart pulse of the agentic mesh",
+    "version": "1.0.0",
+    "safeMode": true,
+    "note": "Public visualization only — no secrets, no private repo paths."
+  },
+  "nodes": [
+    {
+      "id": "L0",
+      "role": "Cryoomega",
+      "layer": 0,
+      "ring": "core",
+      "desc": "Origin nucleus — mesh resonance root",
+      "hue": "cyan"
+    },
+    {
+      "id": "S1",
+      "role": "Strategist",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Direction, priorities, trade-offs",
+      "hue": "cyan"
+    },
+    {
+      "id": "S2",
+      "role": "Architect",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Structure, interfaces, systems map",
+      "hue": "cyan"
+    },
+    {
+      "id": "S3",
+      "role": "Coder",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Implementation & runtime craft",
+      "hue": "mint"
+    },
+    {
+      "id": "S4",
+      "role": "Researcher",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Evidence, sources, synthesis",
+      "hue": "mint"
+    },
+    {
+      "id": "S5",
+      "role": "Writer",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Narrative clarity & voice",
+      "hue": "ice"
+    },
+    {
+      "id": "S6",
+      "role": "Critic",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Stress-test, gaps, quality bar",
+      "hue": "ice"
+    },
+    {
+      "id": "S7",
+      "role": "DomainExpert",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Specialized depth on demand",
+      "hue": "cyan"
+    },
+    {
+      "id": "S8",
+      "role": "Ethicist",
+      "layer": 1,
+      "ring": "agents",
+      "desc": "Boundaries, harm, SafeMode",
+      "hue": "rose"
+    },
+    {
+      "id": "R-BUILD",
+      "role": "Build",
+      "layer": 2,
+      "ring": "rooms",
+      "desc": "Outer ring — construct & ship",
+      "hue": "mint"
+    },
+    {
+      "id": "R-SENSE",
+      "role": "Sense",
+      "layer": 2,
+      "ring": "rooms",
+      "desc": "Outer ring — perceive & reflect",
+      "hue": "rose"
+    }
+  ],
+  "edges": [
+    { "from": "L0", "to": "S1", "kind": "dendrite" },
+    { "from": "L0", "to": "S2", "kind": "dendrite" },
+    { "from": "L0", "to": "S3", "kind": "dendrite" },
+    { "from": "L0", "to": "S4", "kind": "dendrite" },
+    { "from": "L0", "to": "S5", "kind": "dendrite" },
+    { "from": "L0", "to": "S6", "kind": "dendrite" },
+    { "from": "L0", "to": "S7", "kind": "dendrite" },
+    { "from": "L0", "to": "S8", "kind": "dendrite" },
+    { "from": "S1", "to": "S2", "kind": "synapse" },
+    { "from": "S2", "to": "S3", "kind": "synapse" },
+    { "from": "S3", "to": "S4", "kind": "synapse" },
+    { "from": "S4", "to": "S5", "kind": "synapse" },
+    { "from": "S5", "to": "S6", "kind": "synapse" },
+    { "from": "S6", "to": "S7", "kind": "synapse" },
+    { "from": "S7", "to": "S8", "kind": "synapse" },
+    { "from": "S8", "to": "S1", "kind": "synapse" },
+    { "from": "S1", "to": "R-BUILD", "kind": "room" },
+    { "from": "S2", "to": "R-BUILD", "kind": "room" },
+    { "from": "S3", "to": "R-BUILD", "kind": "room" },
+    { "from": "S4", "to": "R-SENSE", "kind": "room" },
+    { "from": "S5", "to": "R-SENSE", "kind": "room" },
+    { "from": "S6", "to": "R-SENSE", "kind": "room" },
+    { "from": "S7", "to": "R-BUILD", "kind": "room" },
+    { "from": "S8", "to": "R-SENSE", "kind": "room" }
+  ]
+}
