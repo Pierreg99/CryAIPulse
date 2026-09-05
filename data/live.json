@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T22:02:18.661Z",
+  "updatedAt": "2026-09-05T22:08:47.773Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -87,5 +87,75 @@
     "state": "code",
     "energy": 0.704,
     "label": "Coding"
-  }
+  },
+  "avatars": [
+    {
+      "id": "cryoomega",
+      "role": "Cryoomega",
+      "state": "wake",
+      "energy": 0.662,
+      "label": "Waking"
+    },
+    {
+      "id": "coder",
+      "role": "Coder",
+      "state": "code",
+      "energy": 0.696,
+      "label": "Coding"
+    },
+    {
+      "id": "critic",
+      "role": "Critic",
+      "state": "check",
+      "energy": 0.636,
+      "label": "Checking"
+    },
+    {
+      "id": "writer",
+      "role": "Writer",
+      "state": "draw",
+      "energy": 0.628,
+      "label": "Drawing"
+    },
+    {
+      "id": "researcher",
+      "role": "Researcher",
+      "state": "read",
+      "energy": 0.644,
+      "label": "Reading"
+    },
+    {
+      "id": "architect",
+      "role": "Architect",
+      "state": "code",
+      "energy": 0.668,
+      "label": "Coding"
+    }
+  ],
+  "dialogue": [
+    {
+      "from": "architect",
+      "to": "coder",
+      "text": "Keep the lounge bar decoupled from counters.",
+      "ts": "2026-09-05T22:08:47.773Z"
+    },
+    {
+      "from": "coder",
+      "to": "cryoomega",
+      "text": "Avatars track node activity. States stay live.",
+      "ts": "2026-09-05T22:08:47.773Z"
+    },
+    {
+      "from": "writer",
+      "to": "cryoomega",
+      "text": "Copy is crisp. Resonance reads human.",
+      "ts": "2026-09-05T22:08:47.773Z"
+    },
+    {
+      "from": "architect",
+      "to": "cryoomega",
+      "text": "Hierarchy clear. Mesh and lounge feel one room.",
+      "ts": "2026-09-05T22:08:47.773Z"
+    }
+  ]
 }

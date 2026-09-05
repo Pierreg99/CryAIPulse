@@ -72,4 +72,6 @@ console.log(JSON.stringify({
   status: live.status,
   historyTail: live.historyTail.length,
   avatar: live.avatar,
+  avatars: (live.avatars || []).length,
+  dialogue: (live.dialogue || []).length,
 }, null, 2));

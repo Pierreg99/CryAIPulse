@@ -1,15 +1,36 @@
 /**
  * Shared builder for data/live.json hot snapshot.
  * Used by publish-live.mjs and append-pulse.mjs.
+ * Includes multi-avatar cast + optional dialogue lines.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
 const REF_TOKENS = 100000;
 const TAIL_MAX = 30;
+const DIALOGUE_PICK = 4;
 
 const NODE_KEYS = [
   'L0', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'Build', 'Sense',
+];
+
+const AVATAR_LABELS = {
+  sleep: 'Sleeping',
+  wake: 'Waking',
+  read: 'Reading',
+  code: 'Coding',
+  draw: 'Drawing',
+  check: 'Checking',
+};
+
+/** Public cast roster — public role names only */
+const CAST_ROSTER = [
+  { id: 'cryoomega', role: 'Cryoomega', node: 'L0', prefer: 'wake' },
+  { id: 'coder', role: 'Coder', node: 'S3', prefer: 'code' },
+  { id: 'critic', role: 'Critic', node: 'S6', prefer: 'check' },
+  { id: 'writer', role: 'Writer', node: 'S5', prefer: 'draw' },
+  { id: 'researcher', role: 'Researcher', node: 'S4', prefer: 'read' },
+  { id: 'architect', role: 'Architect', node: 'S2', prefer: 'code' },
 ];
 
 function intensityFromTokens(totalTokens) {
@@ -38,7 +59,6 @@ function round3(n) {
   return Math.round(clamp01(n) * 1000) / 1000;
 }
 
-/** Parse NODE_ACTIVITY JSON env or NODE_<KEY> floats. */
 function parseNodeHints(env = process.env) {
   const out = {};
   if (env.NODE_ACTIVITY) {
@@ -62,10 +82,6 @@ function parseNodeHints(env = process.env) {
   return out;
 }
 
-/**
- * Derive per-node activity 0..1 from overall intensity + optional hints.
- * Slight role bias so the mesh looks alive, not uniform.
- */
 function buildNodeActivities(u, hints = {}) {
   const bias = {
     L0: 1.0,
@@ -85,7 +101,6 @@ function buildNodeActivities(u, hints = {}) {
     if (hints[k] != null) {
       nodes[k] = { activity: round3(hints[k]) };
     } else {
-      // Mild hash-ish variation so nodes aren't identical every publish
       const wobble = 0.85 + ((k.charCodeAt(0) + k.length * 7) % 11) / 50;
       nodes[k] = { activity: round3(u * (bias[k] || 0.8) * wobble) };
     }
@@ -104,29 +119,25 @@ function readHistory(root) {
   }
 }
 
-/**
- * Build live snapshot object from history + optional overrides.
- * @param {string} root repo root
- * @param {object} [opts]
- * @param {number} [opts.tokensIn]
- * @param {number} [opts.tokensOut]
- * @param {object} [opts.nodeHints]
- * @param {string[]} [opts.sources]
- * @param {string} [opts.status]
- * @param {string} [opts.updatedAt]
- */
-const AVATAR_LABELS = {
-  sleep: 'Sleeping',
-  wake: 'Waking',
-  read: 'Reading',
-  code: 'Coding',
-  draw: 'Drawing',
-  check: 'Checking',
-};
+function readDialogueSeed(root) {
+  const p = path.join(root, 'data', 'dialogue.json');
+  if (!fs.existsSync(p)) return [];
+  try {
+    const parsed = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return Array.isArray(parsed.lines) ? parsed.lines : [];
+  } catch {
+    return [];
+  }
+}
+
+function nodeAct(nodes, key) {
+  const e = nodes[key];
+  if (!e) return 0;
+  return clamp01(typeof e === 'number' ? e : e.activity);
+}
 
 /**
- * Derive compact avatar activity state for the live dock character.
- * Prefer opts.avatar / AVATAR_STATE env; else pulse + nodes + sources.
+ * Derive compact avatar activity state for legacy single avatar field.
  */
 function deriveAvatar(pulse, nodes, sources, opts = {}) {
   if (opts.avatar && opts.avatar.state) {
@@ -151,11 +162,7 @@ function deriveAvatar(pulse, nodes, sources, opts = {}) {
   const brain = clamp01(pulse.brain);
   const heart = clamp01(pulse.heart);
   const energy = (brain + heart) / 2;
-  const act = (k) => {
-    const e = nodes[k];
-    if (!e) return 0;
-    return clamp01(typeof e === 'number' ? e : e.activity);
-  };
+  const act = (k) => nodeAct(nodes, k);
   const src = (sources || []).map((s) => String(s).toLowerCase());
   const has = (frag) => src.some((s) => s.includes(frag));
 
@@ -186,6 +193,97 @@ function deriveAvatar(pulse, nodes, sources, opts = {}) {
     energy: round3(energy),
     label: AVATAR_LABELS[state],
   };
+}
+
+/**
+ * Build avatars[] cast from node activity.
+ */
+function deriveAvatars(pulse, nodes, sources, opts = {}) {
+  if (Array.isArray(opts.avatars) && opts.avatars.length) {
+    return opts.avatars.map((a) => {
+      const roster = CAST_ROSTER.find((r) => r.id === a.id) || CAST_ROSTER[0];
+      const st = AVATAR_LABELS[a.state] ? a.state : roster.prefer;
+      return {
+        id: a.id || roster.id,
+        role: a.role || roster.role,
+        state: st,
+        energy: round3(a.energy != null ? a.energy : 0.5),
+        label: a.label || AVATAR_LABELS[st],
+      };
+    });
+  }
+
+  const baseEnergy = (clamp01(pulse.brain) + clamp01(pulse.heart)) / 2;
+  const src = (sources || []).map((s) => String(s).toLowerCase());
+  const has = (frag) => src.some((s) => s.includes(frag));
+
+  return CAST_ROSTER.map((r) => {
+    const act = nodeAct(nodes, r.node);
+    const energy = round3(act > 0 ? act * 0.55 + baseEnergy * 0.45 : baseEnergy * 0.7);
+    let state = r.prefer;
+
+    if (energy < 0.16) state = 'sleep';
+    else if (energy < 0.26) state = 'wake';
+    else if (r.id === 'coder') state = has('cod') || act >= 0.45 ? 'code' : 'wake';
+    else if (r.id === 'researcher') state = 'read';
+    else if (r.id === 'writer') state = 'draw';
+    else if (r.id === 'critic') state = 'check';
+    else if (r.id === 'architect') state = act >= 0.5 ? 'code' : 'read';
+    else if (r.id === 'cryoomega') {
+      state = energy >= 0.35 ? 'wake' : 'read';
+    }
+
+    if (energy < 0.16) state = 'sleep';
+
+    return {
+      id: r.id,
+      role: r.role,
+      state,
+      energy,
+      label: AVATAR_LABELS[state],
+    };
+  });
+}
+
+/**
+ * Pick a few dialogue lines from seed, biased by active roles.
+ */
+function pickDialogue(root, avatars, opts = {}) {
+  if (Array.isArray(opts.dialogue) && opts.dialogue.length) {
+    return opts.dialogue.slice(0, DIALOGUE_PICK).map((d) => ({
+      from: d.from,
+      to: d.to,
+      text: String(d.text).slice(0, 160),
+      ts: d.ts || new Date().toISOString(),
+    }));
+  }
+
+  const seed = readDialogueSeed(root);
+  if (!seed.length) return [];
+
+  const awake = new Set(
+    (avatars || [])
+      .filter((a) => a.state !== 'sleep')
+      .map((a) => a.id)
+  );
+
+  const scored = seed.map((line, i) => {
+    let score = 1;
+    if (awake.has(line.from)) score += 2;
+    if (awake.has(line.to)) score += 1;
+    // mild rotation by time so publish isn't always the same order
+    score += ((Date.now() / 60000 + i) % 7) * 0.01;
+    return { line, score, i };
+  });
+  scored.sort((a, b) => b.score - a.score);
+
+  const now = new Date().toISOString();
+  return scored.slice(0, DIALOGUE_PICK).map(({ line }) => ({
+    from: line.from,
+    to: line.to,
+    text: String(line.text).slice(0, 160),
+    ts: now,
+  }));
 }
 
 export function buildLiveSnapshot(root, opts = {}) {
@@ -234,6 +332,8 @@ export function buildLiveSnapshot(root, opts = {}) {
     meshBpm,
   };
   const avatar = deriveAvatar(pulseObj, nodes, sources, opts);
+  const avatars = deriveAvatars(pulseObj, nodes, sources, opts);
+  const dialogue = pickDialogue(root, avatars, opts);
 
   return {
     updatedAt: opts.updatedAt || new Date().toISOString(),
@@ -249,6 +349,8 @@ export function buildLiveSnapshot(root, opts = {}) {
     sources,
     status: opts.status || 'live',
     avatar,
+    avatars,
+    dialogue,
   };
 }
 
@@ -260,4 +362,15 @@ export function writeLiveJson(root, opts = {}) {
   return live;
 }
 
-export { REF_TOKENS, NODE_KEYS, parseNodeHints, intensityFromTokens, derive, deriveAvatar, AVATAR_LABELS };
+export {
+  REF_TOKENS,
+  NODE_KEYS,
+  parseNodeHints,
+  intensityFromTokens,
+  derive,
+  deriveAvatar,
+  deriveAvatars,
+  pickDialogue,
+  AVATAR_LABELS,
+  CAST_ROSTER,
+};

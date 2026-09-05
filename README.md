@@ -30,20 +30,22 @@ Public visualization for the **Cryo Omega / AGI-3** agentic mesh — neural dend
 ## Structure
 
 ```
-index.html                 Immersive landing (Brain | Heart + Mesh)
-css/pulse.css              Cryo palette & layout
+index.html                 Immersive landing (Brain | Heart + Mesh + lounge)
+css/pulse.css              Cryo palette, comfort mode, avatar lounge
 js/brain.js                Canvas neural brain / dendrites
 js/heart.js                ECG QRS heart monitor
 js/mesh.js                 Agentic mesh topology + node activity glow
-js/avatar.js               Live activity chibi avatar (canvas)
-js/main.js                 Live poll + lerp orchestration + reduced-motion
+js/avatar.js               AvatarCast — multi chibi lounge (canvas)
+js/dialogue.js             Rotating discussion bubbles between agents
+js/main.js                 Live poll + lerp + comfort + reduced-motion
 data/mesh.json             Public node/edge metadata only
 data/history.json          Token pulse history (public aggregates)
 data/pulse-state.json      Current brain/heart intensity 0..1
 data/live.json             Hot snapshot polled by the frontend
+data/dialogue.json         Reusable short dialogue lines (EN)
 scripts/append-pulse.mjs   TOKEN_IN/OUT → history + state + live.json
 scripts/publish-live.mjs   Rebuild live.json from history (+ env hints)
-scripts/live-snapshot.mjs  Shared live.json builder
+scripts/live-snapshot.mjs  Shared live.json builder (avatars + dialogue)
 examples/                  Bridge notes + demo append
 favicon.svg                Brand mark
 ```
@@ -51,8 +53,11 @@ favicon.svg                Brand mark
 ## Design
 
 - Palette: `#020510` · `#0a1428` · `#00e5ff` · `#00ffa3` · `#e0f7fa` · rose/magenta heart accent
-- Dark cryo aesthetic, premium, no emoji fluff
+- Dark cryo aesthetic, premium, no emoji fluff — Pierrefektion copy
+- Glass cards, calmer gradients, clearer section hierarchy
+- **Comfort mode** toggle: softer contrast, less glow / particle density
 - 60fps-friendly canvas, responsive, hover tooltips on mesh nodes
+- Avatar lounge integrates with panels via shared pulse accent glow
 
 ## Local preview
 
@@ -96,11 +101,20 @@ The Pages site continuously polls **`data/live.json`** and drives every immersiv
   ],
   "sources": ["cryo-llm", "coding", "manual"],
   "status": "live",
-  "avatar": { "state": "code", "energy": 0.7, "label": "Coding" }
+  "avatar": { "state": "code", "energy": 0.7, "label": "Coding" },
+  "avatars": [
+    { "id": "cryoomega", "role": "Cryoomega", "state": "wake", "energy": 0.6, "label": "Waking" }
+  ],
+  "dialogue": [
+    { "from": "coder", "to": "critic", "text": "Diff landed. Want a pass on the edge cases?", "ts": "ISO" }
+  ]
 }
 ```
 
-- `avatar.state`: `sleep` | `wake` | `read` | `code` | `draw` | `check` (derived if omitted).
+- `avatar` — legacy single-agent field (still filled for compatibility).
+- `avatars[]` — lounge cast (`id`, `role`, `state`, `energy`, `label`); derived from node activity if omitted.
+- `dialogue[]` — optional live lines; frontend also rotates `data/dialogue.json` seeds.
+- `avatar.state` / per-avatar `state`: `sleep` | `wake` | `read` | `code` | `draw` | `check`.
 - `nodes.*.activity` is **0..1** (also keys `S2`…`S8`). `Build` / `Sense` map to mesh ids `R-BUILD` / `R-SENSE`.
 - `historyTail` keeps the last ~30 history points for the sparkline (cyan = tokens, rose = BPM).
 - `history.json` and `pulse-state.json` remain the durable log / compact state; **`live.json` is the hot snapshot**.
@@ -119,20 +133,31 @@ TOKEN_IN=28000 TOKEN_OUT=21500 NODE_ACTIVITY='{"L0":0.9,"S3":0.85,"Build":0.7}' 
 Commit & push `data/live.json` (and history/state if appended) so GitHub Pages serves the new snapshot.
 
 
-## Live activity avatar
+## Avatar lounge (multi cast)
 
-A compact cryo-styled chibi agent sits in the **bottom-right** corner and animates from `data/live.json` → `avatar`.
+A cozy **lounge bar** along the bottom holds a cast of **6** cryo chibi agents. States follow `live.json` → `avatars[]` (or node activity). Discussion bubbles rotate short EN lines from `data/dialogue.json` / optional `live.dialogue`.
 
-| State | When (typical) | Prop |
-|-------|----------------|------|
-| `sleep` | Low pulse / little recent activity | Pillow + Zzz |
-| `wake` | Activity just ramping up | Stretch |
-| `read` | Moderate / research (S4 bias) | Book |
-| `code` | High coding tokens / S3 / `coding` source | Laptop |
-| `draw` | Creative / design-ish | Tablet + pen |
-| `check` | Review / critic (S6) | Clipboard + magnifier |
+| Id | Role | Typical state |
+|----|------|---------------|
+| `cryoomega` | Cryoomega (L0) | wake / read |
+| `coder` | Coder | code |
+| `critic` | Critic | check |
+| `writer` | Writer | draw |
+| `researcher` | Researcher | read |
+| `architect` | Architect | code / read |
 
-Scripts set `avatar` automatically in `live-snapshot.mjs` (override with `AVATAR_STATE` / `AVATAR_ENERGY` / `AVATAR_LABEL`). The frontend also derives state if the field is missing. Respects `prefers-reduced-motion` (static pose + label).
+| State | Prop |
+|-------|------|
+| `sleep` | Pillow + Zzz |
+| `wake` | Stretch |
+| `read` | Book |
+| `code` | Laptop |
+| `draw` | Tablet + pen |
+| `check` | Clipboard + magnifier |
+
+**UX:** bubbles appear → fade → next speaker; click an avatar to pin/focus and show a one-line status. Mobile: cast scrolls horizontally without covering counters. Comfort mode + `prefers-reduced-motion` soften glow and bubble animation.
+
+Scripts populate `avatars` + a few `dialogue` picks in `live-snapshot.mjs` (legacy `AVATAR_STATE` still sets the single `avatar` field).
 
 ## Token pulse history
 

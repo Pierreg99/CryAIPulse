@@ -1,14 +1,15 @@
 /**
  * CryAIPulse — orchestration
- * Polls data/live.json and drives brain / heart / mesh / avatar / counters /
- * legend / history sparkline from live snapshot. Smooth lerp; reduced-motion aware.
+ * Polls data/live.json and drives brain / heart / mesh / AvatarCast / dialogue /
+ * counters / legend / history sparkline. Comfort mode + reduced-motion aware.
  */
 (function () {
   'use strict';
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const POLL_MS = prefersReduced ? 12000 : 6000; // 5–8s nominal; softer when reduced
+  const POLL_MS = prefersReduced ? 12000 : 6000;
   const LERP = prefersReduced ? 0.2 : 0.1;
+  const COMFORT_KEY = 'cryaipulse-comfort';
 
   function $(sel) { return document.querySelector(sel); }
 
@@ -34,7 +35,6 @@
     return 'data/live.json?t=' + Date.now();
   }
 
-  /** Map pulse-state.json → live-like shape for one-shot fallback. */
   function fromPulseState(state, history) {
     if (!state) return null;
     const brain = clamp01(state.brain);
@@ -126,6 +126,7 @@
     const max = Math.max.apply(null, vals);
     const span = Math.max(1, max - min);
     const pad = 3;
+    const comfort = document.documentElement.classList.contains('comfort-mode');
 
     ctx.beginPath();
     vals.forEach((v, i) => {
@@ -138,11 +139,10 @@
     ctx.lineWidth = 1.6;
     ctx.lineJoin = 'round';
     ctx.shadowColor = '#00e5ff';
-    ctx.shadowBlur = prefersReduced ? 0 : 6;
+    ctx.shadowBlur = (prefersReduced || comfort) ? 0 : 6;
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    // BPM secondary path (scaled into same band, dashed)
     const bpms = tail.map((e) => Number(e.meshBpm) || 55);
     const bMin = Math.min.apply(null, bpms);
     const bMax = Math.max.apply(null, bpms);
@@ -171,6 +171,20 @@
       : 'live.json unavailable — retrying';
   }
 
+  function readComfortPref() {
+    try {
+      return localStorage.getItem(COMFORT_KEY) === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function writeComfortPref(on) {
+    try {
+      localStorage.setItem(COMFORT_KEY, on ? '1' : '0');
+    } catch (_) { /* ignore */ }
+  }
+
   function boot() {
     const brainCanvas = $('#brain-canvas');
     const heartCanvas = $('#heart-canvas');
@@ -180,20 +194,58 @@
     const bpmEl = $('#cardiac-bpm');
     const spark = $('#history-spark');
 
-    const brain = new CryAIPulseBrain(brainCanvas, { reduced: prefersReduced });
-    const heart = new CryAIPulseHeart(heartCanvas, { reduced: prefersReduced });
+    let comfortOn = readComfortPref();
+    if (comfortOn) document.documentElement.classList.add('comfort-mode');
+
+    const brain = new CryAIPulseBrain(brainCanvas, { reduced: prefersReduced || comfortOn });
+    const heart = new CryAIPulseHeart(heartCanvas, { reduced: prefersReduced || comfortOn });
     brain.mount();
     heart.mount();
 
-    const avatarCanvas = $('#avatar-canvas');
-    const avatarLabel = $('#avatar-label');
-    let avatar = null;
-    if (avatarCanvas && typeof CryAIPulseAvatar === 'function') {
-      avatar = new CryAIPulseAvatar(avatarCanvas, {
+    let cast = null;
+    let dialogue = null;
+    const loungeRoot = $('#avatar-lounge');
+
+    if (loungeRoot && typeof CryAIPulseAvatarCast === 'function') {
+      cast = new CryAIPulseAvatarCast(loungeRoot, {
         reduced: prefersReduced,
-        labelEl: avatarLabel,
+        comfort: comfortOn,
+        onPin: function (id, status) {
+          if (dialogue) {
+            dialogue.setPinned(id);
+            dialogue.setStatusText(status || (id ? '' : 'Cast · tap an agent to focus'));
+          }
+        },
       });
-      avatar.mount();
+      cast.mount();
+
+      if (typeof CryAIPulseDialogue === 'function') {
+        dialogue = new CryAIPulseDialogue({
+          root: cast.chrome || loungeRoot.querySelector('.lounge-chrome'),
+          reduced: prefersReduced,
+          comfort: comfortOn,
+          castIds: cast.getCastIds(),
+          onFocus: function (fromId) {
+            if (cast) cast.setSpeaking(fromId);
+          },
+        });
+        dialogue.mount();
+        dialogue.setStatusText('Cast · tap an agent to focus');
+      }
+    }
+
+    const comfortBtn = $('#comfort-toggle');
+    if (comfortBtn) {
+      comfortBtn.setAttribute('aria-pressed', comfortOn ? 'true' : 'false');
+      comfortBtn.addEventListener('click', () => {
+        comfortOn = !comfortOn;
+        document.documentElement.classList.toggle('comfort-mode', comfortOn);
+        comfortBtn.setAttribute('aria-pressed', comfortOn ? 'true' : 'false');
+        writeComfortPref(comfortOn);
+        if (cast) cast.setComfort(comfortOn);
+        if (dialogue) dialogue.setComfort(comfortOn);
+        if (lastLive) drawSparkline(spark, lastLive.historyTail || []);
+      });
     }
 
     const targets = {
@@ -231,6 +283,10 @@
       if (live.pulse.neuralHz != null) targets.neuralHz = Number(live.pulse.neuralHz);
       if (live.pulse.meshBpm != null) targets.meshBpm = Number(live.pulse.meshBpm);
 
+      const pulseAvg = (brainU + heartU) / 2;
+      document.documentElement.style.setProperty('--lounge-pulse', String(pulseAvg));
+      document.body.classList.toggle('pulse-hot', pulseAvg >= 0.48);
+
       if (mesh && live.nodes) mesh.setNodeActivity(live.nodes);
       updateLegendActivity(live.nodes);
 
@@ -263,7 +319,8 @@
       }
 
       drawSparkline(spark, live.historyTail || []);
-      if (avatar && avatar.applyLive) avatar.applyLive(live);
+      if (cast && cast.applyLive) cast.applyLive(live);
+      if (dialogue && dialogue.applyLive) dialogue.applyLive(live);
       setStatusChrome(live.status || 'live', true);
       lastLive = live;
     }
@@ -326,12 +383,18 @@
       loadJson(liveUrl()).catch(() => null),
       loadJson('data/pulse-state.json').catch(() => null),
       loadJson('data/history.json').catch(() => []),
+      loadJson('data/dialogue.json').catch(() => null),
     ])
-      .then(([meshData, liveData, pulseState, history]) => {
+      .then(([meshData, liveData, pulseState, history, dialogueData]) => {
         historyCache = Array.isArray(history) ? history : [];
         renderLegend(meshData.nodes);
-        mesh = new CryAIPulseMesh(meshCanvas, tip, { reduced: prefersReduced });
+        mesh = new CryAIPulseMesh(meshCanvas, tip, { reduced: prefersReduced || comfortOn });
         mesh.mount(meshData);
+
+        if (dialogue && dialogueData && Array.isArray(dialogueData.lines)) {
+          dialogue.setSeedLines(dialogueData.lines);
+          dialogue.nudge();
+        }
 
         let initial = liveData;
         if (!initial) {
@@ -353,10 +416,11 @@
         if (initial) applyTargetsFromLive(initial);
 
         window.__cryaipulse = {
-          brain, heart, mesh, avatar,
+          brain, heart, mesh, cast, dialogue,
           data: meshData,
           live: lastLive,
           pollMs: POLL_MS,
+          comfort: comfortOn,
         };
 
         pollLive();

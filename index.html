@@ -25,6 +25,7 @@
         </div>
       </a>
       <div class="header-badges">
+        <button type="button" class="comfort-toggle" id="comfort-toggle" aria-pressed="false" title="Reduce glow and particle density">Comfort</button>
         <span class="badge-safe" title="Public visualization — no secrets">SafeMode</span>
       </div>
     </header>
@@ -35,7 +36,7 @@
       </h2>
       <p class="tagline">
         Live resonance map for AGI-3 / Cryoomega mesh roles — neural dendrites from L0,
-        ECG QRS heartbeat, synaptic gaps, and room rings Build + Sense.
+        ECG QRS heartbeat, synaptic gaps, and a lounge cast that discusses the mesh.
       </p>
       <div class="live-bar" aria-label="Live data status">
         <span class="live-pill" id="live-status" data-state="live" title="Polling data/live.json">live</span>
@@ -121,18 +122,16 @@
     </footer>
   </div>
 
-  <aside id="avatar-dock" class="avatar-dock" aria-label="Live activity avatar">
-    <div class="avatar-frame">
-      <canvas id="avatar-canvas" width="112" height="112" aria-label="Activity avatar"></canvas>
-    </div>
-    <span id="avatar-label" class="avatar-label">Sleeping</span>
+  <aside id="avatar-lounge" class="avatar-lounge" aria-label="Cryo agent lounge — interactive cast">
+    <!-- Populated by AvatarCast + DialogueDirector -->
   </aside>
 
   <script src="js/brain.js" defer></script>
   <script src="js/heart.js" defer></script>
   <script src="js/mesh.js" defer></script>
   <script src="js/avatar.js" defer></script>
-  <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Interactive mesh available.</div>
+  <script src="js/dialogue.js" defer></script>
+  <div class="sr-only" aria-live="polite">CryAIPulse visualization loaded. Interactive mesh and avatar lounge available.</div>
   <script src="js/main.js" defer></script>
 </body>
 </html>

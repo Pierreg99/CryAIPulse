@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "note": "Reusable short dialogue lines for the avatar lounge. EN, tight, Pierrefektion — no emoji.",
+    "version": 1
+  },
+  "lines": [
+    { "from": "cryoomega", "to": "coder", "text": "Mesh pulse steady. Ship the next delta clean." },
+    { "from": "coder", "to": "critic", "text": "Diff landed. Want a pass on the edge cases?" },
+    { "from": "critic", "to": "coder", "text": "Tighten the null path. Then we greenlight." },
+    { "from": "researcher", "to": "writer", "text": "Sources align. Frame the architecture briefly." },
+    { "from": "writer", "to": "cryoomega", "text": "Copy is crisp. Resonance reads human." },
+    { "from": "architect", "to": "coder", "text": "Keep the lounge bar decoupled from counters." },
+    { "from": "coder", "to": "architect", "text": "Glass cards share the accent glow now." },
+    { "from": "cryoomega", "to": "researcher", "text": "Token pulse rising. Map where energy pools." },
+    { "from": "researcher", "to": "critic", "text": "History tail is healthy. Sparklines honest." },
+    { "from": "critic", "to": "writer", "text": "Drop fluff. One status line per pinned agent." },
+    { "from": "writer", "to": "coder", "text": "Comfort mode softens glow without losing signal." },
+    { "from": "architect", "to": "cryoomega", "text": "Hierarchy clear. Mesh and lounge feel one room." },
+    { "from": "coder", "to": "cryoomega", "text": "Avatars track node activity. States stay live." },
+    { "from": "cryoomega", "to": "architect", "text": "Build and Sense rings humming. Hold the cadence." },
+    { "from": "researcher", "to": "coder", "text": "Schema extended. dialogue.json seeds the cast." },
+    { "from": "critic", "to": "cryoomega", "text": "Reduced motion respected. Static poses are fine." },
+    { "from": "writer", "to": "researcher", "text": "Topics stay mesh, tokens, review, architecture." },
+    { "from": "architect", "to": "critic", "text": "Mobile scrolls the cast. Counters stay free." }
+  ]
+}
