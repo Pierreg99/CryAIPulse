@@ -18,6 +18,7 @@
     this.tooltip = tooltipEl;
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.reduced = !!(opts && opts.reduced);
+    this.intensity = 0.35; // 0..1 token immersion (avg of brain/heart)
     this.data = null;
     this.nodes = [];
     this.edges = [];
@@ -157,19 +158,37 @@
     if (this.tooltip) this.tooltip.classList.remove('visible');
   };
 
+  /** Token-driven immersion — faster / denser mesh ripples as tokens rise. */
+  MeshPulse.prototype.setIntensity = function (u) {
+    this.intensity = Math.max(0, Math.min(1, Number(u) || 0));
+  };
+
   MeshPulse.prototype.spawnPulse = function () {
     if (this.reduced || !this.edges.length) return;
     const e = this.edges[Math.floor(Math.random() * this.edges.length)];
-    this.pulses.push({ from: e.from, to: e.to, p: 0, speed: 0.01 + Math.random() * 0.015, kind: e.kind });
-    if (this.pulses.length > 28) this.pulses.shift();
+    const boost = 1 + this.intensity * 1.6;
+    this.pulses.push({
+      from: e.from, to: e.to, p: 0,
+      speed: (0.01 + Math.random() * 0.015) * boost,
+      kind: e.kind
+    });
+    const cap = 28 + Math.floor(this.intensity * 24);
+    if (this.pulses.length > cap) this.pulses.shift();
   };
 
   MeshPulse.prototype.spawnRipple = function () {
     if (this.reduced) return;
     const core = this.byId && this.byId.L0;
     if (!core) return;
-    this.ripples.push({ x: core.x, y: core.y, r: 8, life: 0.45, max: Math.min(this.w, this.h) * 0.48 });
-    if (this.ripples.length > 6) this.ripples.shift();
+    const speed = 1.6 + this.intensity * 2.4;
+    this.ripples.push({
+      x: core.x, y: core.y, r: 8,
+      life: 0.4 + this.intensity * 0.25,
+      max: Math.min(this.w, this.h) * 0.48,
+      speed
+    });
+    const cap = 6 + Math.floor(this.intensity * 6);
+    if (this.ripples.length > cap) this.ripples.shift();
   };
 
   MeshPulse.prototype.loop = function (now) {
@@ -177,8 +196,10 @@
     this._last = now;
     this.t += dt / 1000;
     if (!this.reduced) {
-      if (Math.random() < 0.1) this.spawnPulse();
-      if (Math.random() < 0.012) this.spawnRipple();
+      const pulseChance = 0.08 + this.intensity * 0.18;
+      const rippleChance = 0.01 + this.intensity * 0.045;
+      if (Math.random() < pulseChance) this.spawnPulse();
+      if (Math.random() < rippleChance) this.spawnRipple();
     }
     this.draw();
     this._raf = requestAnimationFrame(this.loop.bind(this));
@@ -205,7 +226,7 @@
 
     // Resonance ripples
     this.ripples = this.ripples.filter((r) => {
-      r.r += this.reduced ? 0 : 1.8;
+      r.r += this.reduced ? 0 : (r.speed || 1.8);
       r.life -= 0.008;
       if (r.life <= 0 || r.r > r.max) return false;
       ctx.beginPath();

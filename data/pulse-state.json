@@ -1,0 +1,15 @@
+{
+  "updatedAt": "2026-09-05T21:26:38.372Z",
+  "brain": 0.704,
+  "heart": 0.704,
+  "neuralHz": 15.8,
+  "meshBpm": 90,
+  "lastTotalTokens": 49500,
+  "formula": {
+    "refTokens": 100000,
+    "intensity": "u = min(1, sqrt(totalTokens / REF_TOKENS))",
+    "neuralHz": "6 + u * 14  (Hz; rises with tokens)",
+    "meshBpm": "55 + u * 50  (BPM; rises with tokens)",
+    "brainHeart": "pulse-state brain/heart intensity = u (0..1)"
+  }
+}

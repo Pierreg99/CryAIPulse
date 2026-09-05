@@ -14,6 +14,8 @@
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.reduced = !!(opts && opts.reduced);
     this.bpm = 72;
+    this.intensity = 0.35; // 0..1 from token pulse-state (heart)
+    this.ampScale = 1;
     this.t = 0;
     this.phase = 0;
     this.trace = [];
@@ -50,9 +52,25 @@
     return this.bpm;
   };
 
+  /** Token-driven immersion — stronger ECG amplitude as tokens rise. */
+  HeartPulse.prototype.setIntensity = function (u, meshBpm) {
+    this.intensity = Math.max(0, Math.min(1, Number(u) || 0));
+    // Amplitude scale: 0.85 (calm) → 1.55 (high token load); muted if reduced-motion
+    this.ampScale = this.reduced
+      ? 1
+      : 0.85 + this.intensity * 0.7;
+    if (meshBpm != null && Number.isFinite(Number(meshBpm))) {
+      this.bpm = Number(meshBpm);
+    }
+  };
+
   HeartPulse.prototype.tickBpm = function () {
+    const base = this.bpm;
+    const band = 1.5 + this.intensity * 3;
     this.bpm += (Math.sin(this.t * 0.25) * 0.04) + (Math.random() - 0.5) * 0.08;
-    this.bpm = Math.max(58, Math.min(96, this.bpm));
+    const lo = Math.max(55, base - band);
+    const hi = Math.min(110, base + band);
+    this.bpm = Math.max(lo, Math.min(hi, this.bpm));
   };
 
   /** Classic ECG: P → QRS → T, normalized -1..1 around baseline */
@@ -102,9 +120,9 @@
 
     // Beat flash on R peak crossing
     if (prevPhase < 0.35 && this.phase >= 0.35) {
-      this._beatFlash = 1;
+      this._beatFlash = this.reduced ? 0.35 : 0.7 + this.intensity * 0.5;
     }
-    this._beatFlash = Math.max(0, this._beatFlash - dt * 2.5);
+    this._beatFlash = Math.max(0, this._beatFlash - dt * (2.2 - this.intensity * 0.6));
 
     const sample = this.ecgSample(this.phase);
     this.trace.push(sample);
@@ -145,7 +163,7 @@
 
     // Baseline
     const mid = h * 0.52;
-    const amp = h * 0.28;
+    const amp = h * 0.28 * (this.ampScale || 1);
     ctx.strokeStyle = 'rgba(255, 77, 141, 0.2)';
     ctx.setLineDash([4, 6]);
     ctx.beginPath();

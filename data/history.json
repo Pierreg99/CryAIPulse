@@ -1,0 +1,47 @@
+[
+  {
+    "ts": "2026-09-05T13:50:38.372Z",
+    "tokensIn": 800,
+    "tokensOut": 450,
+    "totalTokens": 1250,
+    "neuralHz": 7.6,
+    "meshBpm": 61,
+    "source": "demo"
+  },
+  {
+    "ts": "2026-09-05T16:50:38.372Z",
+    "tokensIn": 3200,
+    "tokensOut": 2100,
+    "totalTokens": 5300,
+    "neuralHz": 9.2,
+    "meshBpm": 67,
+    "source": "demo"
+  },
+  {
+    "ts": "2026-09-05T18:50:38.372Z",
+    "tokensIn": 9100,
+    "tokensOut": 6400,
+    "totalTokens": 15500,
+    "neuralHz": 11.5,
+    "meshBpm": 75,
+    "source": "demo"
+  },
+  {
+    "ts": "2026-09-05T20:20:38.372Z",
+    "tokensIn": 18500,
+    "tokensOut": 14200,
+    "totalTokens": 32700,
+    "neuralHz": 14,
+    "meshBpm": 84,
+    "source": "demo"
+  },
+  {
+    "ts": "2026-09-05T21:26:38.372Z",
+    "tokensIn": 28000,
+    "tokensOut": 21500,
+    "totalTokens": 49500,
+    "neuralHz": 15.8,
+    "meshBpm": 90,
+    "source": "demo"
+  }
+]

@@ -14,6 +14,7 @@
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.reduced = !!(opts && opts.reduced);
     this.hz = 8 + Math.random() * 4;
+    this.intensity = 0.35; // 0..1 from token pulse-state (brain)
     this.t = 0;
     this.nodes = [];
     this.edges = [];
@@ -124,22 +125,36 @@
     return this.hz;
   };
 
+  /** Token-driven immersion 0..1 — denser sparks / faster pulses as tokens rise. */
+  BrainPulse.prototype.setIntensity = function (u, neuralHz) {
+    this.intensity = Math.max(0, Math.min(1, Number(u) || 0));
+    if (neuralHz != null && Number.isFinite(Number(neuralHz))) {
+      this.hz = Number(neuralHz);
+    }
+  };
+
   BrainPulse.prototype.tickHz = function () {
-    // Cosmetic neural frequency drift
+    // Drift around token-derived base Hz; higher intensity → slightly wider band
+    const base = this.hz;
+    const band = 0.4 + this.intensity * 0.8;
     this.hz += (Math.sin(this.t * 0.4) * 0.02) + (Math.random() - 0.5) * 0.05;
-    this.hz = Math.max(6, Math.min(18, this.hz));
+    const lo = Math.max(6, base - band);
+    const hi = Math.min(20, base + band);
+    this.hz = Math.max(lo, Math.min(hi, this.hz));
   };
 
   BrainPulse.prototype.spawnPulse = function () {
     if (this.reduced) return;
     const edge = this.edges[Math.floor(Math.random() * this.edges.length)];
     if (!edge) return;
+    const boost = 1 + this.intensity * 1.4;
     this.pulses.push({
       a: edge.a, b: edge.b, p: 0,
-      speed: edge.kind === 'dendrite' ? 0.012 + Math.random() * 0.01 : 0.018 + Math.random() * 0.012,
+      speed: (edge.kind === 'dendrite' ? 0.012 + Math.random() * 0.01 : 0.018 + Math.random() * 0.012) * boost,
       kind: edge.kind
     });
-    if (this.pulses.length > 40) this.pulses.shift();
+    const cap = 40 + Math.floor(this.intensity * 40);
+    if (this.pulses.length > cap) this.pulses.shift();
   };
 
   BrainPulse.prototype.loop = function (now) {
@@ -147,7 +162,9 @@
     this._last = now;
     this.t += dt / 1000;
     this.tickHz();
-    if (!this.reduced && Math.random() < 0.08) this.spawnPulse();
+    // Spawn rate rises with token intensity (denser neural sparks)
+    const spawnChance = this.reduced ? 0 : 0.06 + this.intensity * 0.22;
+    if (Math.random() < spawnChance) this.spawnPulse();
     this.draw();
     this._raf = requestAnimationFrame(this.loop.bind(this));
   };
@@ -184,11 +201,13 @@
 
       // Synaptic gap spark
       if (e.kind === 'synapse' && !this.reduced) {
-        const spark = (Math.sin(this.t * 8 + e.delay * 10) + 1) * 0.5;
-        if (spark > 0.85) {
+        const sparkRate = 8 + this.intensity * 10;
+        const spark = (Math.sin(this.t * sparkRate + e.delay * 10) + 1) * 0.5;
+        const thresh = 0.88 - this.intensity * 0.25;
+        if (spark > thresh) {
           ctx.beginPath();
-          ctx.arc(mx, my, 2.2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(224, 247, 250, ${spark})`;
+          ctx.arc(mx, my, 2.2 + this.intensity * 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(224, 247, 250, ${Math.min(1, spark)})`;
           ctx.fill();
         }
       }

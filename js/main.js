@@ -1,6 +1,7 @@
 /**
  * CryAIPulse — orchestration
- * Loads mesh data, mounts Brain / Heart / Mesh, counters, reduced-motion.
+ * Loads mesh + token pulse history / pulse-state, mounts Brain / Heart / Mesh,
+ * drives immersive intensity from token usage, respects prefers-reduced-motion.
  */
 (function () {
   'use strict';
@@ -13,9 +14,9 @@
     return n.toFixed(digits);
   }
 
-  async function loadMesh() {
-    const res = await fetch('data/mesh.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to load mesh.json');
+  async function loadJson(path) {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to load ' + path);
     return res.json();
   }
 
@@ -35,6 +36,32 @@
     }).join('');
   }
 
+  function applyPulseState(brain, heart, mesh, state) {
+    if (!state) return;
+    const brainU = prefersReduced ? Math.min(0.25, Number(state.brain) || 0) : Number(state.brain) || 0;
+    const heartU = prefersReduced ? Math.min(0.25, Number(state.heart) || 0) : Number(state.heart) || 0;
+    const meshU = prefersReduced
+      ? Math.min(0.25, (brainU + heartU) / 2)
+      : (brainU + heartU) / 2;
+
+    if (brain && brain.setIntensity) brain.setIntensity(brainU, state.neuralHz);
+    if (heart && heart.setIntensity) heart.setIntensity(heartU, state.meshBpm);
+    if (mesh && mesh.setIntensity) mesh.setIntensity(meshU);
+
+    const tokEl = $('#token-total');
+    if (tokEl && state.lastTotalTokens != null) {
+      tokEl.textContent = String(state.lastTotalTokens);
+    }
+    const srcEl = $('#pulse-updated');
+    if (srcEl && state.updatedAt) {
+      try {
+        srcEl.textContent = new Date(state.updatedAt).toLocaleString();
+      } catch (_) {
+        srcEl.textContent = state.updatedAt;
+      }
+    }
+  }
+
   function boot() {
     const brainCanvas = $('#brain-canvas');
     const heartCanvas = $('#heart-canvas');
@@ -48,7 +75,6 @@
     brain.mount();
     heart.mount();
 
-    // Counter updater (cosmetic)
     function updateCounters() {
       if (hzEl) hzEl.textContent = formatNum(brain.getHz(), 1);
       if (bpmEl) bpmEl.textContent = formatNum(heart.getBpm(), 0);
@@ -56,12 +82,37 @@
     }
     updateCounters();
 
-    loadMesh()
-      .then((data) => {
-        renderLegend(data.nodes);
+    Promise.all([
+      loadJson('data/mesh.json'),
+      loadJson('data/pulse-state.json').catch(() => null),
+      loadJson('data/history.json').catch(() => []),
+    ])
+      .then(([meshData, pulseState, history]) => {
+        renderLegend(meshData.nodes);
         const mesh = new CryAIPulseMesh(meshCanvas, tip, { reduced: prefersReduced });
-        mesh.mount(data);
-        window.__cryaipulse = { brain, heart, mesh, data };
+        mesh.mount(meshData);
+
+        // Prefer live pulse-state; fall back to latest history event
+        let state = pulseState;
+        if ((!state || state.brain == null) && Array.isArray(history) && history.length) {
+          const last = history[history.length - 1];
+          state = {
+            updatedAt: last.ts,
+            brain: Math.min(1, Math.sqrt((last.totalTokens || 0) / 100000)),
+            heart: Math.min(1, Math.sqrt((last.totalTokens || 0) / 100000)),
+            neuralHz: last.neuralHz,
+            meshBpm: last.meshBpm,
+            lastTotalTokens: last.totalTokens,
+          };
+        }
+        applyPulseState(brain, heart, mesh, state);
+
+        const histEl = $('#history-count');
+        if (histEl && Array.isArray(history)) {
+          histEl.textContent = String(history.length);
+        }
+
+        window.__cryaipulse = { brain, heart, mesh, data: meshData, pulseState: state, history };
       })
       .catch((err) => {
         console.error(err);
