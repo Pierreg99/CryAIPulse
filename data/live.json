@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T07:34:32.659Z",
+  "updatedAt": "2026-09-07T08:02:27.048Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.9
+      "activity": 0.91
     },
     "S1": {
-      "activity": 0.58
+      "activity": 0.56
     },
     "S2": {
-      "activity": 0.54
+      "activity": 0.55
     },
     "S3": {
-      "activity": 0.5
+      "activity": 0.53
     },
     "S4": {
-      "activity": 0.47
-    },
-    "S5": {
-      "activity": 0.44
-    },
-    "S6": {
-      "activity": 0.52
-    },
-    "S7": {
       "activity": 0.46
     },
+    "S5": {
+      "activity": 0.45
+    },
+    "S6": {
+      "activity": 0.5
+    },
+    "S7": {
+      "activity": 0.47
+    },
     "S8": {
-      "activity": 0.48
+      "activity": 0.49
     },
     "Build": {
-      "activity": 0.74
+      "activity": 0.76
     },
     "Sense": {
-      "activity": 0.7
+      "activity": 0.69
     }
   },
   "historyTail": [
@@ -95,69 +95,69 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.812,
+      "energy": 0.817,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.592,
+      "energy": 0.608,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.603,
+      "energy": 0.592,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.559,
+      "energy": 0.564,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.575,
+      "energy": 0.57,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.614,
+      "energy": 0.619,
       "label": "Coding"
     }
   ],
   "dialogue": [
     {
+      "from": "critic",
+      "to": "cryoomega",
+      "text": "Reduced motion respected. Static poses are fine.",
+      "ts": "2026-09-07T08:02:27.048Z"
+    },
+    {
       "from": "coder",
       "to": "critic",
       "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-07T07:34:32.659Z"
+      "ts": "2026-09-07T08:02:27.048Z"
     },
     {
       "from": "researcher",
       "to": "critic",
       "text": "History tail is healthy. Sparklines honest.",
-      "ts": "2026-09-07T07:34:32.659Z"
+      "ts": "2026-09-07T08:02:27.048Z"
     },
     {
-      "from": "critic",
-      "to": "cryoomega",
-      "text": "Reduced motion respected. Static poses are fine.",
-      "ts": "2026-09-07T07:34:32.659Z"
-    },
-    {
-      "from": "cryoomega",
+      "from": "researcher",
       "to": "coder",
-      "text": "Mesh pulse steady. Ship the next delta clean.",
-      "ts": "2026-09-07T07:34:32.659Z"
+      "text": "Schema extended. dialogue.json seeds the cast.",
+      "ts": "2026-09-07T08:02:27.048Z"
     }
   ]
 }
