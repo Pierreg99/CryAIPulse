@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T10:28:48.778Z",
+  "updatedAt": "2026-09-14T10:59:49.532Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -136,28 +136,28 @@
   ],
   "dialogue": [
     {
-      "from": "critic",
+      "from": "coder",
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-14T10:59:49.532Z"
+    },
+    {
+      "from": "cryoomega",
+      "to": "architect",
+      "text": "Build and Sense rings humming. Hold the cadence.",
+      "ts": "2026-09-14T10:59:49.532Z"
+    },
+    {
+      "from": "architect",
       "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-14T10:28:48.777Z"
-    },
-    {
-      "from": "critic",
-      "to": "writer",
-      "text": "Drop fluff. One status line per pinned agent.",
-      "ts": "2026-09-14T10:28:48.777Z"
-    },
-    {
-      "from": "writer",
-      "to": "researcher",
-      "text": "Topics stay mesh, tokens, review, architecture.",
-      "ts": "2026-09-14T10:28:48.777Z"
+      "text": "Keep the lounge bar decoupled from counters.",
+      "ts": "2026-09-14T10:59:49.532Z"
     },
     {
       "from": "coder",
-      "to": "critic",
-      "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-14T10:28:48.777Z"
+      "to": "cryoomega",
+      "text": "Avatars track node activity. States stay live.",
+      "ts": "2026-09-14T10:59:49.532Z"
     }
   ]
 }
