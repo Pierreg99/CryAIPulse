@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T07:55:47.092Z",
+  "updatedAt": "2026-09-14T08:09:22.470Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.693
+      "activity": 0.808
     },
     "S1": {
-      "activity": 0.757
+      "activity": 0.726
     },
     "S2": {
-      "activity": 0.613
+      "activity": 0.648
     },
     "S3": {
-      "activity": 0.852
+      "activity": 0.881
     },
     "S4": {
-      "activity": 0.651
-    },
-    "S5": {
-      "activity": 0.585
-    },
-    "S6": {
-      "activity": 0.696
-    },
-    "S7": {
       "activity": 0.566
     },
+    "S5": {
+      "activity": 0.639
+    },
+    "S6": {
+      "activity": 0.658
+    },
+    "S7": {
+      "activity": 0.65
+    },
     "S8": {
-      "activity": 0.583
+      "activity": 0.565
     },
     "Build": {
-      "activity": 0.681
+      "activity": 0.615
     },
     "Sense": {
-      "activity": 0.651
+      "activity": 0.674
     }
   },
   "historyTail": [
@@ -95,42 +95,42 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.698,
+      "energy": 0.761,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.785,
+      "energy": 0.801,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.7,
+      "energy": 0.679,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.639,
+      "energy": 0.668,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.675,
+      "energy": 0.628,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.654,
+      "energy": 0.673,
       "label": "Coding"
     }
   ],
@@ -139,25 +139,25 @@
       "from": "coder",
       "to": "critic",
       "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-14T07:55:47.092Z"
+      "ts": "2026-09-14T08:09:22.470Z"
     },
     {
       "from": "researcher",
       "to": "critic",
       "text": "History tail is healthy. Sparklines honest.",
-      "ts": "2026-09-14T07:55:47.092Z"
+      "ts": "2026-09-14T08:09:22.470Z"
     },
     {
       "from": "critic",
       "to": "cryoomega",
       "text": "Reduced motion respected. Static poses are fine.",
-      "ts": "2026-09-14T07:55:47.092Z"
+      "ts": "2026-09-14T08:09:22.470Z"
     },
     {
       "from": "cryoomega",
       "to": "coder",
       "text": "Mesh pulse steady. Ship the next delta clean.",
-      "ts": "2026-09-14T07:55:47.092Z"
+      "ts": "2026-09-14T08:09:22.470Z"
     }
   ]
 }
