@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T10:05:41.702Z",
+  "updatedAt": "2026-09-14T10:28:48.778Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -136,28 +136,28 @@
   ],
   "dialogue": [
     {
-      "from": "writer",
-      "to": "cryoomega",
-      "text": "Copy is crisp. Resonance reads human.",
-      "ts": "2026-09-14T10:05:41.701Z"
-    },
-    {
-      "from": "architect",
-      "to": "cryoomega",
-      "text": "Hierarchy clear. Mesh and lounge feel one room.",
-      "ts": "2026-09-14T10:05:41.701Z"
-    },
-    {
-      "from": "researcher",
-      "to": "writer",
-      "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-14T10:05:41.701Z"
-    },
-    {
-      "from": "writer",
+      "from": "critic",
       "to": "coder",
-      "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-14T10:05:41.701Z"
+      "text": "Tighten the null path. Then we greenlight.",
+      "ts": "2026-09-14T10:28:48.777Z"
+    },
+    {
+      "from": "critic",
+      "to": "writer",
+      "text": "Drop fluff. One status line per pinned agent.",
+      "ts": "2026-09-14T10:28:48.777Z"
+    },
+    {
+      "from": "writer",
+      "to": "researcher",
+      "text": "Topics stay mesh, tokens, review, architecture.",
+      "ts": "2026-09-14T10:28:48.777Z"
+    },
+    {
+      "from": "coder",
+      "to": "critic",
+      "text": "Diff landed. Want a pass on the edge cases?",
+      "ts": "2026-09-14T10:28:48.777Z"
     }
   ]
 }
