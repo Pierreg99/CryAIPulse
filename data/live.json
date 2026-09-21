@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T08:56:38.778Z",
+  "updatedAt": "2026-09-21T09:12:46.602Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,34 +14,34 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.604
+      "activity": 0.7
     },
     "S1": {
-      "activity": 0.592
+      "activity": 0.621
     },
     "S2": {
-      "activity": 0.624
+      "activity": 0.56
     },
     "S3": {
-      "activity": 0.631
+      "activity": 0.573
     },
     "S4": {
-      "activity": 0.488
+      "activity": 0.485
     },
     "S5": {
-      "activity": 0.492
+      "activity": 0.472
     },
     "S6": {
-      "activity": 0.541
+      "activity": 0.512
     },
     "S7": {
-      "activity": 0.544
+      "activity": 0.576
     },
     "S8": {
-      "activity": 0.473
+      "activity": 0.526
     },
     "Build": {
-      "activity": 0.619
+      "activity": 0.63
     },
     "Sense": {
       "activity": 0.58
@@ -96,69 +96,69 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.649,
+      "energy": 0.702,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.664,
+      "energy": 0.632,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.614,
+      "energy": 0.598,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.587,
+      "energy": 0.576,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.585,
+      "energy": 0.584,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.66,
+      "energy": 0.625,
       "label": "Coding"
     }
   ],
   "dialogue": [
     {
-      "from": "researcher",
-      "to": "writer",
-      "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-21T08:56:38.778Z"
-    },
-    {
-      "from": "writer",
-      "to": "coder",
-      "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-21T08:56:38.778Z"
-    },
-    {
-      "from": "architect",
+      "from": "coder",
       "to": "critic",
-      "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-21T08:56:38.778Z"
+      "text": "Diff landed. Want a pass on the edge cases?",
+      "ts": "2026-09-21T09:12:46.601Z"
+    },
+    {
+      "from": "researcher",
+      "to": "critic",
+      "text": "History tail is healthy. Sparklines honest.",
+      "ts": "2026-09-21T09:12:46.601Z"
     },
     {
       "from": "critic",
+      "to": "cryoomega",
+      "text": "Reduced motion respected. Static poses are fine.",
+      "ts": "2026-09-21T09:12:46.601Z"
+    },
+    {
+      "from": "cryoomega",
       "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-21T08:56:38.778Z"
+      "text": "Mesh pulse steady. Ship the next delta clean.",
+      "ts": "2026-09-21T09:12:46.601Z"
     }
   ]
 }
