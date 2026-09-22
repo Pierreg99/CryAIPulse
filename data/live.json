@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T11:55:23.253Z",
+  "updatedAt": "2026-09-22T12:21:02.256Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -136,28 +136,28 @@
   ],
   "dialogue": [
     {
-      "from": "coder",
-      "to": "critic",
-      "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-22T11:55:23.253Z"
+      "from": "researcher",
+      "to": "writer",
+      "text": "Sources align. Frame the architecture briefly.",
+      "ts": "2026-09-22T12:21:02.255Z"
     },
     {
-      "from": "researcher",
+      "from": "writer",
+      "to": "coder",
+      "text": "Comfort mode softens glow without losing signal.",
+      "ts": "2026-09-22T12:21:02.255Z"
+    },
+    {
+      "from": "architect",
       "to": "critic",
-      "text": "History tail is healthy. Sparklines honest.",
-      "ts": "2026-09-22T11:55:23.253Z"
+      "text": "Mobile scrolls the cast. Counters stay free.",
+      "ts": "2026-09-22T12:21:02.255Z"
     },
     {
       "from": "critic",
-      "to": "cryoomega",
-      "text": "Reduced motion respected. Static poses are fine.",
-      "ts": "2026-09-22T11:55:23.253Z"
-    },
-    {
-      "from": "cryoomega",
-      "to": "researcher",
-      "text": "Token pulse rising. Map where energy pools.",
-      "ts": "2026-09-22T11:55:23.253Z"
+      "to": "coder",
+      "text": "Tighten the null path. Then we greenlight.",
+      "ts": "2026-09-22T12:21:02.255Z"
     }
   ]
 }
