@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T10:25:35.158Z",
+  "updatedAt": "2026-09-22T10:26:02.114Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -82,7 +82,7 @@
   "sources": [
     "demo",
     "history",
-    "live-publisher"
+    "live-coding-pulse"
   ],
   "status": "live",
   "avatar": {
@@ -137,27 +137,27 @@
   "dialogue": [
     {
       "from": "cryoomega",
-      "to": "coder",
-      "text": "Mesh pulse steady. Ship the next delta clean.",
-      "ts": "2026-09-22T10:25:35.157Z"
-    },
-    {
-      "from": "cryoomega",
-      "to": "researcher",
-      "text": "Token pulse rising. Map where energy pools.",
-      "ts": "2026-09-22T10:25:35.157Z"
-    },
-    {
-      "from": "researcher",
-      "to": "coder",
-      "text": "Schema extended. dialogue.json seeds the cast.",
-      "ts": "2026-09-22T10:25:35.157Z"
+      "to": "architect",
+      "text": "Build and Sense rings humming. Hold the cadence.",
+      "ts": "2026-09-22T10:26:02.114Z"
     },
     {
       "from": "coder",
       "to": "architect",
       "text": "Glass cards share the accent glow now.",
-      "ts": "2026-09-22T10:25:35.157Z"
+      "ts": "2026-09-22T10:26:02.114Z"
+    },
+    {
+      "from": "coder",
+      "to": "cryoomega",
+      "text": "Avatars track node activity. States stay live.",
+      "ts": "2026-09-22T10:26:02.114Z"
+    },
+    {
+      "from": "architect",
+      "to": "coder",
+      "text": "Keep the lounge bar decoupled from counters.",
+      "ts": "2026-09-22T10:26:02.114Z"
     }
   ]
 }
