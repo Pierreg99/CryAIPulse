@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T11:22:33.022Z",
+  "updatedAt": "2026-09-22T11:38:30.680Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -82,7 +82,7 @@
   "sources": [
     "demo",
     "history",
-    "live-publisher"
+    "live-json-publisher"
   ],
   "status": "live",
   "avatar": {
@@ -136,28 +136,28 @@
   ],
   "dialogue": [
     {
-      "from": "coder",
-      "to": "architect",
-      "text": "Glass cards share the accent glow now.",
-      "ts": "2026-09-22T11:22:33.021Z"
-    },
-    {
-      "from": "cryoomega",
-      "to": "architect",
-      "text": "Build and Sense rings humming. Hold the cadence.",
-      "ts": "2026-09-22T11:22:33.021Z"
+      "from": "writer",
+      "to": "cryoomega",
+      "text": "Copy is crisp. Resonance reads human.",
+      "ts": "2026-09-22T11:38:30.678Z"
     },
     {
       "from": "architect",
-      "to": "coder",
-      "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-22T11:22:33.021Z"
+      "to": "cryoomega",
+      "text": "Hierarchy clear. Mesh and lounge feel one room.",
+      "ts": "2026-09-22T11:38:30.678Z"
     },
     {
-      "from": "coder",
-      "to": "cryoomega",
-      "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-22T11:22:33.021Z"
+      "from": "researcher",
+      "to": "writer",
+      "text": "Sources align. Frame the architecture briefly.",
+      "ts": "2026-09-22T11:38:30.678Z"
+    },
+    {
+      "from": "writer",
+      "to": "coder",
+      "text": "Comfort mode softens glow without losing signal.",
+      "ts": "2026-09-22T11:38:30.678Z"
     }
   ]
 }
