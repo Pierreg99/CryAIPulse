@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T16:54:20.162Z",
+  "updatedAt": "2026-09-23T07:22:35.482Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.868
+      "activity": 0.763
     },
     "S1": {
-      "activity": 0.434
+      "activity": 0.671
     },
     "S2": {
-      "activity": 0.433
+      "activity": 0.547
     },
     "S3": {
-      "activity": 0.765
+      "activity": 0.819
     },
     "S4": {
-      "activity": 0.663
+      "activity": 0.507
     },
     "S5": {
-      "activity": 0.623
+      "activity": 0.504
     },
     "S6": {
-      "activity": 0.538
+      "activity": 0.64
     },
     "S7": {
-      "activity": 0.557
+      "activity": 0.65
     },
     "S8": {
-      "activity": 0.562
+      "activity": 0.559
     },
     "Build": {
-      "activity": 0.588
+      "activity": 0.798
     },
     "Sense": {
-      "activity": 0.704
+      "activity": 0.627
     }
   },
   "historyTail": [
@@ -82,7 +82,7 @@
   "sources": [
     "demo",
     "history",
-    "live-coding-pulse"
+    "live-json-publisher"
   ],
   "status": "live",
   "avatar": {
@@ -95,43 +95,43 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.794,
+      "energy": 0.736,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.738,
+      "energy": 0.767,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.613,
+      "energy": 0.669,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.659,
+      "energy": 0.594,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.681,
+      "energy": 0.596,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
-      "state": "read",
-      "energy": 0.555,
-      "label": "Reading"
+      "state": "code",
+      "energy": 0.618,
+      "label": "Coding"
     }
   ],
   "dialogue": [
@@ -139,25 +139,25 @@
       "from": "researcher",
       "to": "writer",
       "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-22T16:54:20.161Z"
+      "ts": "2026-09-23T07:22:35.479Z"
     },
     {
       "from": "writer",
       "to": "coder",
       "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-22T16:54:20.161Z"
+      "ts": "2026-09-23T07:22:35.479Z"
     },
     {
       "from": "architect",
       "to": "critic",
       "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-22T16:54:20.161Z"
+      "ts": "2026-09-23T07:22:35.479Z"
     },
     {
       "from": "critic",
       "to": "coder",
       "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-22T16:54:20.161Z"
+      "ts": "2026-09-23T07:22:35.479Z"
     }
   ]
 }
