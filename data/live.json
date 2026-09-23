@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T12:17:07.357Z",
+  "updatedAt": "2026-09-23T12:45:09.191Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.635
+      "activity": 0.624
     },
     "S1": {
-      "activity": 0.669
+      "activity": 0.682
     },
     "S2": {
-      "activity": 0.548
+      "activity": 0.667
     },
     "S3": {
-      "activity": 0.52
+      "activity": 0.627
     },
     "S4": {
-      "activity": 0.544
+      "activity": 0.535
     },
     "S5": {
-      "activity": 0.577
-    },
-    "S6": {
-      "activity": 0.465
-    },
-    "S7": {
-      "activity": 0.452
-    },
-    "S8": {
-      "activity": 0.456
-    },
-    "Build": {
       "activity": 0.583
     },
+    "S6": {
+      "activity": 0.549
+    },
+    "S7": {
+      "activity": 0.503
+    },
+    "S8": {
+      "activity": 0.505
+    },
+    "Build": {
+      "activity": 0.682
+    },
     "Sense": {
-      "activity": 0.565
+      "activity": 0.626
     }
   },
   "historyTail": [
@@ -96,69 +96,69 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.666,
+      "energy": 0.66,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.603,
+      "energy": 0.662,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.573,
+      "energy": 0.619,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.634,
+      "energy": 0.637,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.616,
+      "energy": 0.611,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.618,
+      "energy": 0.684,
       "label": "Coding"
     }
   ],
   "dialogue": [
     {
       "from": "critic",
-      "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-23T12:17:07.356Z"
-    },
-    {
-      "from": "critic",
       "to": "writer",
       "text": "Drop fluff. One status line per pinned agent.",
-      "ts": "2026-09-23T12:17:07.356Z"
+      "ts": "2026-09-23T12:45:09.191Z"
     },
     {
       "from": "writer",
       "to": "researcher",
       "text": "Topics stay mesh, tokens, review, architecture.",
-      "ts": "2026-09-23T12:17:07.356Z"
+      "ts": "2026-09-23T12:45:09.191Z"
     },
     {
-      "from": "coder",
-      "to": "critic",
-      "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-23T12:17:07.356Z"
+      "from": "critic",
+      "to": "coder",
+      "text": "Tighten the null path. Then we greenlight.",
+      "ts": "2026-09-23T12:45:09.191Z"
+    },
+    {
+      "from": "critic",
+      "to": "cryoomega",
+      "text": "Reduced motion respected. Static poses are fine.",
+      "ts": "2026-09-23T12:45:09.191Z"
     }
   ]
 }
