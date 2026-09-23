@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T07:47:08.506Z",
+  "updatedAt": "2026-09-23T08:21:27.696Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.736
+      "activity": 0.739
     },
     "S1": {
-      "activity": 0.672
+      "activity": 0.654
     },
     "S2": {
-      "activity": 0.585
+      "activity": 0.563
     },
     "S3": {
-      "activity": 0.824
+      "activity": 0.662
     },
     "S4": {
-      "activity": 0.502
+      "activity": 0.531
     },
     "S5": {
-      "activity": 0.505
+      "activity": 0.587
     },
     "S6": {
-      "activity": 0.616
+      "activity": 0.585
     },
     "S7": {
-      "activity": 0.638
+      "activity": 0.61
     },
     "S8": {
-      "activity": 0.548
+      "activity": 0.496
     },
     "Build": {
-      "activity": 0.767
+      "activity": 0.589
     },
     "Sense": {
-      "activity": 0.628
+      "activity": 0.666
     }
   },
   "historyTail": [
@@ -95,69 +95,69 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.722,
+      "energy": 0.723,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.77,
+      "energy": 0.681,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.656,
+      "energy": 0.639,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.595,
+      "energy": 0.64,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.593,
+      "energy": 0.609,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.639,
+      "energy": 0.626,
       "label": "Coding"
     }
   ],
   "dialogue": [
     {
-      "from": "coder",
-      "to": "architect",
-      "text": "Glass cards share the accent glow now.",
-      "ts": "2026-09-23T07:47:08.505Z"
+      "from": "cryoomega",
+      "to": "coder",
+      "text": "Mesh pulse steady. Ship the next delta clean.",
+      "ts": "2026-09-23T08:21:27.695Z"
     },
     {
       "from": "cryoomega",
-      "to": "architect",
-      "text": "Build and Sense rings humming. Hold the cadence.",
-      "ts": "2026-09-23T07:47:08.505Z"
+      "to": "researcher",
+      "text": "Token pulse rising. Map where energy pools.",
+      "ts": "2026-09-23T08:21:27.695Z"
     },
     {
-      "from": "architect",
+      "from": "researcher",
       "to": "coder",
-      "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-23T07:47:08.505Z"
+      "text": "Schema extended. dialogue.json seeds the cast.",
+      "ts": "2026-09-23T08:21:27.695Z"
     },
     {
       "from": "coder",
-      "to": "cryoomega",
-      "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-23T07:47:08.505Z"
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-23T08:21:27.695Z"
     }
   ]
 }
