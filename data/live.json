@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T09:18:17.877Z",
+  "updatedAt": "2026-09-23T09:38:14.454Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -136,28 +136,28 @@
   ],
   "dialogue": [
     {
-      "from": "coder",
-      "to": "architect",
-      "text": "Glass cards share the accent glow now.",
-      "ts": "2026-09-23T09:18:17.876Z"
+      "from": "cryoomega",
+      "to": "coder",
+      "text": "Mesh pulse steady. Ship the next delta clean.",
+      "ts": "2026-09-23T09:38:14.453Z"
     },
     {
       "from": "cryoomega",
-      "to": "architect",
-      "text": "Build and Sense rings humming. Hold the cadence.",
-      "ts": "2026-09-23T09:18:17.876Z"
+      "to": "researcher",
+      "text": "Token pulse rising. Map where energy pools.",
+      "ts": "2026-09-23T09:38:14.453Z"
     },
     {
-      "from": "architect",
+      "from": "researcher",
       "to": "coder",
-      "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-23T09:18:17.876Z"
+      "text": "Schema extended. dialogue.json seeds the cast.",
+      "ts": "2026-09-23T09:38:14.453Z"
     },
     {
       "from": "coder",
-      "to": "cryoomega",
-      "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-23T09:18:17.876Z"
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-23T09:38:14.453Z"
     }
   ]
 }
