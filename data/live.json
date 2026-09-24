@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T08:32:03.229Z",
+  "updatedAt": "2026-09-24T08:59:37.454Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -82,7 +82,7 @@
   "sources": [
     "demo",
     "history",
-    "live-coding-pulse",
+    "live-json-publisher",
     "cryo-llm-catalog",
     "opencode"
   ],
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
+      "from": "coder",
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-24T08:59:37.453Z"
+    },
+    {
+      "from": "cryoomega",
+      "to": "architect",
+      "text": "Build and Sense rings humming. Hold the cadence.",
+      "ts": "2026-09-24T08:59:37.453Z"
+    },
+    {
       "from": "architect",
       "to": "coder",
       "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-24T08:32:03.229Z"
+      "ts": "2026-09-24T08:59:37.453Z"
     },
     {
       "from": "coder",
       "to": "cryoomega",
       "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-24T08:32:03.229Z"
-    },
-    {
-      "from": "writer",
-      "to": "cryoomega",
-      "text": "Copy is crisp. Resonance reads human.",
-      "ts": "2026-09-24T08:32:03.229Z"
-    },
-    {
-      "from": "architect",
-      "to": "cryoomega",
-      "text": "Hierarchy clear. Mesh and lounge feel one room.",
-      "ts": "2026-09-24T08:32:03.229Z"
+      "ts": "2026-09-24T08:59:37.453Z"
     }
   ]
 }
