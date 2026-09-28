@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T16:08:34.290Z",
+  "updatedAt": "2026-09-28T16:24:18.493Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
-      "from": "architect",
-      "to": "coder",
-      "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-28T16:08:34.290Z"
-    },
-    {
-      "from": "coder",
-      "to": "cryoomega",
-      "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-28T16:08:34.290Z"
+      "from": "researcher",
+      "to": "writer",
+      "text": "Sources align. Frame the architecture briefly.",
+      "ts": "2026-09-28T16:24:18.493Z"
     },
     {
       "from": "writer",
-      "to": "cryoomega",
-      "text": "Copy is crisp. Resonance reads human.",
-      "ts": "2026-09-28T16:08:34.290Z"
+      "to": "coder",
+      "text": "Comfort mode softens glow without losing signal.",
+      "ts": "2026-09-28T16:24:18.493Z"
     },
     {
       "from": "architect",
-      "to": "cryoomega",
-      "text": "Hierarchy clear. Mesh and lounge feel one room.",
-      "ts": "2026-09-28T16:08:34.290Z"
+      "to": "critic",
+      "text": "Mobile scrolls the cast. Counters stay free.",
+      "ts": "2026-09-28T16:24:18.493Z"
+    },
+    {
+      "from": "critic",
+      "to": "coder",
+      "text": "Tighten the null path. Then we greenlight.",
+      "ts": "2026-09-28T16:24:18.493Z"
     }
   ]
 }
