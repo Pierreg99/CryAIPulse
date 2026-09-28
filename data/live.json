@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T10:13:02.226Z",
+  "updatedAt": "2026-09-28T10:24:40.067Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
-      "from": "writer",
-      "to": "coder",
-      "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-28T10:13:02.226Z"
+      "from": "coder",
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-28T10:24:40.067Z"
+    },
+    {
+      "from": "cryoomega",
+      "to": "architect",
+      "text": "Build and Sense rings humming. Hold the cadence.",
+      "ts": "2026-09-28T10:24:40.067Z"
     },
     {
       "from": "architect",
-      "to": "critic",
-      "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-28T10:13:02.226Z"
+      "to": "coder",
+      "text": "Keep the lounge bar decoupled from counters.",
+      "ts": "2026-09-28T10:24:40.067Z"
     },
     {
-      "from": "researcher",
-      "to": "writer",
-      "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-28T10:13:02.226Z"
-    },
-    {
-      "from": "critic",
-      "to": "writer",
-      "text": "Drop fluff. One status line per pinned agent.",
-      "ts": "2026-09-28T10:13:02.226Z"
+      "from": "coder",
+      "to": "cryoomega",
+      "text": "Avatars track node activity. States stay live.",
+      "ts": "2026-09-28T10:24:40.067Z"
     }
   ]
 }
