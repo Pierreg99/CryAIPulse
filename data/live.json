@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T07:25:59.807Z",
+  "updatedAt": "2026-09-28T07:36:58.805Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
-      "from": "researcher",
-      "to": "writer",
-      "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-28T07:25:59.806Z"
+      "from": "coder",
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-28T07:36:58.805Z"
     },
     {
-      "from": "writer",
-      "to": "coder",
-      "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-28T07:25:59.806Z"
+      "from": "cryoomega",
+      "to": "architect",
+      "text": "Build and Sense rings humming. Hold the cadence.",
+      "ts": "2026-09-28T07:36:58.805Z"
     },
     {
       "from": "architect",
-      "to": "critic",
-      "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-28T07:25:59.806Z"
+      "to": "coder",
+      "text": "Keep the lounge bar decoupled from counters.",
+      "ts": "2026-09-28T07:36:58.805Z"
     },
     {
-      "from": "critic",
-      "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-28T07:25:59.806Z"
+      "from": "coder",
+      "to": "cryoomega",
+      "text": "Avatars track node activity. States stay live.",
+      "ts": "2026-09-28T07:36:58.805Z"
     }
   ]
 }
