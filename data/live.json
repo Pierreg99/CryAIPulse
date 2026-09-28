@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T14:25:31.657Z",
+  "updatedAt": "2026-09-28T14:42:05.799Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
+      "from": "cryoomega",
+      "to": "coder",
+      "text": "Mesh pulse steady. Ship the next delta clean.",
+      "ts": "2026-09-28T14:42:05.798Z"
+    },
+    {
+      "from": "cryoomega",
+      "to": "researcher",
+      "text": "Token pulse rising. Map where energy pools.",
+      "ts": "2026-09-28T14:42:05.798Z"
+    },
+    {
       "from": "researcher",
-      "to": "writer",
-      "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-28T14:25:31.656Z"
-    },
-    {
-      "from": "writer",
       "to": "coder",
-      "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-28T14:25:31.656Z"
+      "text": "Schema extended. dialogue.json seeds the cast.",
+      "ts": "2026-09-28T14:42:05.798Z"
     },
     {
-      "from": "architect",
-      "to": "critic",
-      "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-28T14:25:31.656Z"
-    },
-    {
-      "from": "critic",
-      "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-28T14:25:31.656Z"
+      "from": "coder",
+      "to": "architect",
+      "text": "Glass cards share the accent glow now.",
+      "ts": "2026-09-28T14:42:05.798Z"
     }
   ]
 }
