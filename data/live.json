@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T17:06:03.445Z",
+  "updatedAt": "2026-09-29T07:12:40.360Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
+      "from": "writer",
+      "to": "cryoomega",
+      "text": "Copy is crisp. Resonance reads human.",
+      "ts": "2026-09-29T07:12:40.360Z"
+    },
+    {
+      "from": "architect",
+      "to": "cryoomega",
+      "text": "Hierarchy clear. Mesh and lounge feel one room.",
+      "ts": "2026-09-29T07:12:40.360Z"
+    },
+    {
       "from": "researcher",
       "to": "writer",
       "text": "Sources align. Frame the architecture briefly.",
-      "ts": "2026-09-28T17:06:03.444Z"
+      "ts": "2026-09-29T07:12:40.360Z"
     },
     {
       "from": "writer",
       "to": "coder",
       "text": "Comfort mode softens glow without losing signal.",
-      "ts": "2026-09-28T17:06:03.444Z"
-    },
-    {
-      "from": "architect",
-      "to": "critic",
-      "text": "Mobile scrolls the cast. Counters stay free.",
-      "ts": "2026-09-28T17:06:03.444Z"
-    },
-    {
-      "from": "critic",
-      "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-28T17:06:03.444Z"
+      "ts": "2026-09-29T07:12:40.360Z"
     }
   ]
 }
