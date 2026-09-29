@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29T08:45:05.182Z",
+  "updatedAt": "2026-09-29T08:58:28.196Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -138,28 +138,28 @@
   ],
   "dialogue": [
     {
-      "from": "critic",
-      "to": "coder",
-      "text": "Tighten the null path. Then we greenlight.",
-      "ts": "2026-09-29T08:45:05.182Z"
-    },
-    {
-      "from": "critic",
+      "from": "researcher",
       "to": "writer",
-      "text": "Drop fluff. One status line per pinned agent.",
-      "ts": "2026-09-29T08:45:05.182Z"
+      "text": "Sources align. Frame the architecture briefly.",
+      "ts": "2026-09-29T08:58:28.196Z"
     },
     {
       "from": "writer",
-      "to": "researcher",
-      "text": "Topics stay mesh, tokens, review, architecture.",
-      "ts": "2026-09-29T08:45:05.182Z"
+      "to": "coder",
+      "text": "Comfort mode softens glow without losing signal.",
+      "ts": "2026-09-29T08:58:28.196Z"
     },
     {
-      "from": "coder",
+      "from": "architect",
       "to": "critic",
-      "text": "Diff landed. Want a pass on the edge cases?",
-      "ts": "2026-09-29T08:45:05.182Z"
+      "text": "Mobile scrolls the cast. Counters stay free.",
+      "ts": "2026-09-29T08:58:28.196Z"
+    },
+    {
+      "from": "critic",
+      "to": "coder",
+      "text": "Tighten the null path. Then we greenlight.",
+      "ts": "2026-09-29T08:58:28.196Z"
     }
   ]
 }
