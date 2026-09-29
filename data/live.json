@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29T13:15:56.373Z",
+  "updatedAt": "2026-09-29T13:37:15.605Z",
   "tokens": {
     "in": 28000,
     "out": 21500,
@@ -14,37 +14,37 @@
   },
   "nodes": {
     "L0": {
-      "activity": 0.767
+      "activity": 0.713
     },
     "S1": {
-      "activity": 0.633
+      "activity": 0.697
     },
     "S2": {
-      "activity": 0.601
+      "activity": 0.544
     },
     "S3": {
-      "activity": 0.816
+      "activity": 0.857
     },
     "S4": {
-      "activity": 0.59
+      "activity": 0.663
     },
     "S5": {
-      "activity": 0.571
+      "activity": 0.606
     },
     "S6": {
-      "activity": 0.559
+      "activity": 0.621
     },
     "S7": {
-      "activity": 0.569
+      "activity": 0.558
     },
     "S8": {
-      "activity": 0.493
+      "activity": 0.466
     },
     "Build": {
-      "activity": 0.76
+      "activity": 0.812
     },
     "Sense": {
-      "activity": 0.617
+      "activity": 0.693
     }
   },
   "historyTail": [
@@ -82,7 +82,7 @@
   "sources": [
     "demo",
     "history",
-    "live-json-publisher",
+    "live-coding-pulse",
     "cryo-llm-catalog",
     "opencode"
   ],
@@ -97,69 +97,69 @@
       "id": "cryoomega",
       "role": "Cryoomega",
       "state": "wake",
-      "energy": 0.739,
+      "energy": 0.709,
       "label": "Waking"
     },
     {
       "id": "coder",
       "role": "Coder",
       "state": "code",
-      "energy": 0.766,
+      "energy": 0.788,
       "label": "Coding"
     },
     {
       "id": "critic",
       "role": "Critic",
       "state": "check",
-      "energy": 0.624,
+      "energy": 0.658,
       "label": "Checking"
     },
     {
       "id": "writer",
       "role": "Writer",
       "state": "draw",
-      "energy": 0.631,
+      "energy": 0.65,
       "label": "Drawing"
     },
     {
       "id": "researcher",
       "role": "Researcher",
       "state": "read",
-      "energy": 0.641,
+      "energy": 0.681,
       "label": "Reading"
     },
     {
       "id": "architect",
       "role": "Architect",
       "state": "code",
-      "energy": 0.647,
+      "energy": 0.616,
       "label": "Coding"
     }
   ],
   "dialogue": [
     {
-      "from": "architect",
-      "to": "coder",
-      "text": "Keep the lounge bar decoupled from counters.",
-      "ts": "2026-09-29T13:15:56.373Z"
-    },
-    {
-      "from": "coder",
-      "to": "cryoomega",
-      "text": "Avatars track node activity. States stay live.",
-      "ts": "2026-09-29T13:15:56.373Z"
-    },
-    {
       "from": "writer",
       "to": "cryoomega",
       "text": "Copy is crisp. Resonance reads human.",
-      "ts": "2026-09-29T13:15:56.373Z"
+      "ts": "2026-09-29T13:37:15.604Z"
     },
     {
       "from": "architect",
       "to": "cryoomega",
       "text": "Hierarchy clear. Mesh and lounge feel one room.",
-      "ts": "2026-09-29T13:15:56.373Z"
+      "ts": "2026-09-29T13:37:15.604Z"
+    },
+    {
+      "from": "researcher",
+      "to": "writer",
+      "text": "Sources align. Frame the architecture briefly.",
+      "ts": "2026-09-29T13:37:15.604Z"
+    },
+    {
+      "from": "writer",
+      "to": "coder",
+      "text": "Comfort mode softens glow without losing signal.",
+      "ts": "2026-09-29T13:37:15.604Z"
     }
   ]
 }
